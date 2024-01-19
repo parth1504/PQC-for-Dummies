@@ -1,0 +1,119 @@
+/* lamport.css */
+
+/* Container for array elements */
+.input-row, .digital-signature-row {
+    display: flex;
+    flex-direction: column; /* Change to column */
+}
+
+/* Add this to your CSS file */
+.intercepted-element {
+    background-color: #222; /* Dark background color */
+    color: #ff0000; /* Red text color */
+    font-weight: bold; /* Make the text bold */
+    text-decoration: line-through; /* Add a line-through text decoration */
+    transform: rotate(5deg); /* Slightly rotate the element */
+    opacity: 0.7; /* Reduce the opacity to make it semi-transparent */
+    /* You can further customize the style or add more effects as needed */
+}
+
+
+.array-box input {
+    width: 100%; /* Ensure input elements take the full width */
+    height: 30px; /* Adjust the height as needed */
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Adjust the public key container width and padding */
+.public-key-container {
+    width: 55%; /* Increase the width as needed */
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+/* Adjust the public key X' and Y' boxes */
+.public-key-container .array-box {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Add a fixed height for consistency */
+}
+
+.array-container {
+    display: flex;
+    flex-wrap: wrap; /* Wrap elements to the next row when necessary */
+    gap: 10px; /* Add some space between elements */
+}
+
+/* Styling for each array element */
+.array-box {
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Add a fixed height for consistency */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Default background color */
+    border: 1px solid #ccc; /* Add a border for separation */
+    font-weight: bold; /* Make the text bold */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+/* Highlight style for elements selected from the private key */
+.selected-from-privateKey {
+    background-color: yellow; /* Highlight in yellow */
+}
+
+/* Highlight style for elements selected from the public key */
+.selected-from-publicKey {
+    background-color: lightblue; /* Highlight in light blue */
+}
+
+/* Container for private key and public key sections */
+.key-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Add space at the bottom */
+}
+
+/* Styling for private key and public key sections */
+.private-key{
+    width: 100%; /* Adjust the width as needed */
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff; /* White background for sections */
+}
+
+.public-key {
+    width: 100%; /* Adjust the width as needed */
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff; /* White background for sections */
+}
+
+/* Container for public key elements */
+.public-key-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align content to the top */
+}
+
+/* Styling for the signature section */
+.signature {
+    width: 50%; /* Adjust the width as needed */
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-top: 20px; /* Add space at the top */
+    background-color: #fff; /* White background for the signature section */
+}
+
+/* Styling for the arrow */
+.arrow p {
+    font-size: 100px; /* Adjust the size as needed */
+    margin: 0; /* Remove margin to align properly */
+}
+
+/* Additional styling for highlighting */
+.key-container:hover .selected-from-privateKey,
+.public-key-container:hover .selected-from-publicKey {
+    background-color: transparent; /* Remove the highlight on hover */
+}

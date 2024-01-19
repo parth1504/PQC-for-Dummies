@@ -1,0 +1,126 @@
+.steps-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  opacity: 0;
+}
+
+.step-display {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.binary-sections {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.section {
+  width: 60px;
+  height: 60px;
+  background-color: #3498db;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 14px;
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.array-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.array-box {
+  padding: 8px;
+  margin: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.3s, color 0.3s;
+  animation: fadeIn 0.3s linear;
+}
+
+/* Style for the casino tiles */
+.casino-tiles {
+  display: flex;
+  width: 800px; /* Adjust the width to fit your layout */
+  margin: 20px auto;
+}
+
+/* Style for each individual tile */
+.tile {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 20px;
+  background-color: #f0f0f0; /* Change the background color as needed */
+}
+
+/* ... (other CSS styles remain the same) */
+
+.input-message {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.input-message p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+.hash-message p {
+  font-family: monospace; /* Using a monospace font for better readability */
+  margin: 5px 0;
+  font-weight: bold;
+  white-space: pre; /* Preserve white spaces */
+}
+
+.binary-sections {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.binary-section {
+  padding: 8px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  margin: 5px;
+  transition: all 0.5s ease;
+}
+
+/* Animation styles */
+.binary-section p {
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.binary-section.animated {
+  transform: translateY(-20px); /* Adjust this value as per your preference */
+}
+
+.binary-section.animated p {
+  opacity: 1;
+}

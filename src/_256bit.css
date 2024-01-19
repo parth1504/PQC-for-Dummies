@@ -1,0 +1,142 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #282c34;
+    color: white;
+    font-size: 1.5em;
+}
+
+.visualization {
+    width: 400px;
+    height: 400px;
+    margin-bottom: 20px;
+}
+
+.grain,
+.grain-in-box {
+    fill: #fff;
+}
+
+.box {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.room,
+.skyscraper {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    transition: opacity 1s;
+}
+
+.box-in-room,
+.room-in-skyscraper {
+    fill: #fff;
+}
+
+.power-of-two {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.city-view {
+    position: relative;
+    perspective: 1000px;
+}
+
+.city-view {
+    position: relative;
+    perspective: 1000px;
+    overflow: hidden;
+    /* Hide the parts of the cityscape that are out of view */
+}
+
+.skyscraper {
+    width: 5%;
+    height: 50vh;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: transform 1s;
+}
+
+.cityscape {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    /* Initially position it to the right of the viewport */
+    opacity: 0;
+    z-index: 2;
+    /* Initially hidden */
+}
+
+.building {
+    width: 5%;
+    height: 40vh;
+    background-color: #fff;
+    margin-right: 2%;
+    transition: transform 1s;
+}
+
+
+/* Varying building heights for a more realistic cityscape */
+
+.planet {
+    width: 50vmin;
+    height: 50vmin;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, #F9D423 0%, #FF4E50 100%);
+    position: absolute;
+    transform: translate(-50%, -50%) scale(0.01);
+    bottom: 40%;
+    opacity: 0;
+    z-index: 1;
+    /* Start with the planet behind the cityscape */
+    transition: z-index 0s 2s;
+    /* Delay the z-index change */
+}
+
+.galaxy {
+    width: 60vmin;
+    height: 60vmin;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, #9db9d8 0%, #0a0a0a 70%);
+    position: absolute;
+    bottom: 35%;
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: #FFF;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkling 1.5s infinite alternate;
+}
+
+@keyframes twinkling {
+    0% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}

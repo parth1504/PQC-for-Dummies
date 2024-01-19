@@ -1,0 +1,104 @@
+/* Add some basic styles */
+.array-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.array-box {
+    padding: 8px;
+    margin: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #f0f0f0;
+    font-weight: bold;
+    font-size: 20px;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+    animation: fadeIn 0.3s linear;
+}
+
+/* Animation for changing background color and text color */
+@keyframes fadeIn {
+    from {
+        background-color: transparent;
+        color: #333;
+        transform: scale(0.8);
+    }
+    to {
+        background-color: #f0f0f0;
+        color: black;
+        transform: scale(1);
+    }
+}
+
+/* Apply delay for animation */
+.array-box:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.array-box:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.array-box:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.array-box:nth-child(4) {
+    animation-delay: 1.5s;
+}
+
+.array-box:nth-child(5) {
+    animation-delay: 2s;
+}
+
+.array-box:nth-child(6) {
+    animation-delay: 2.5s;
+}
+
+/* Additional styling for the 'Generate keys' button */
+.button-wots {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.button-wots:hover {
+    background-color: #0056b3;
+}
+
+/* Add animation delay for the input container */
+.input-container .array-box {
+    animation-delay: 3s;
+}
+/* CSS for connecting arrows */
+.secret-key-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.secret-key-element {
+    text-align: center;
+}
+
+.public-key-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.public-key-element {
+    text-align: center;
+}
