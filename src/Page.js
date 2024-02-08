@@ -190,7 +190,7 @@ const initialEdges = [
   {
     id: "5",
     source: "encrypt",
-    target: "digital signature outer",
+    target: "digital signature inner",
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 12,
@@ -200,8 +200,8 @@ const initialEdges = [
   },
   {
     id: "6",
-    source: "private key outer",
-    target: "hash2 label",
+    source: "hash2 label",
+    target: "decrypt",
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 12,
@@ -231,12 +231,12 @@ const initialEdges = [
       color: "#000000",
     },
   },
-  { id: "9", source: "text 1", target: "message in receiver's side" },
-  { id: "10", source: "hash2 label", target: "public key outer" },
+  { id: "9", source: "text1", target: "message in receiver's side" },
+  { id: "10", source: "message in receiver's side" ,target:"hash2 label"},
   {
     id: "11",
-    source: "encrypt",
-    target: "Digital signature in receiver's side",
+    source: "digital Signature outer",
+    target: "ds in receiver's side",
   },
   {
     id: "12",

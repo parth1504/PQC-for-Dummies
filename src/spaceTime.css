@@ -1,0 +1,18 @@
+#container {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    position: relative;
+  }
+  
+  #circle {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  

@@ -8,6 +8,8 @@ import BitAnimation from "./text";
 import _256bit from "./_256bit";
 import Hash from "./hash";
 import MerkleTreeComponent from "./merkleTree";
+import SpaceTime from "./spaceTime";
+import SpaceTime2 from "./spaceTime2";
 
 function App() {
   return (
@@ -15,13 +17,13 @@ function App() {
       <Routes>
         <Route path="/256" element={<_256bit/>} />
         <Route path="/" element={<Hash/>} />
-
         <Route path="/ds" element={<Page/>} />
         <Route path="/lamport" element={<Lamport/>} />
         <Route path="/hors" element={<BitAnimation/>} />
         <Route path="/wots" element={<Wots/>} />
         <Route path="/merkletree" element={<MerkleTreeComponent/>} />
-
+        <Route path="/spaceTime" element={<SpaceTime/>} />
+        <Route path="/spaceTime2" element={<SpaceTime2/>} />
       </Routes>
     </Router>
   );
