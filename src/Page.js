@@ -15,10 +15,11 @@ const initialNodes = [
   {
     id: "digital Signature outer",
     data: { label: "Digital Signature" },
-    position: { x: 290, y: 420 },
+    position: { x: 0, y: 920 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 150 },
   },
+
   {
     id: "digital signature inner",
     data: { label: "sign" },
@@ -28,7 +29,7 @@ const initialNodes = [
   {
     id: "text1",
     data: { label: "Message", value: "123" },
-    position: { x: 700, y: 100 },
+    position: { x: 250, y: 200 },
     className: "light",
   },
   // {
@@ -40,13 +41,13 @@ const initialNodes = [
   {
     id: "encrypt",
     data: { label: "Encrypt", value: "123" },
-    position: { x: 310, y: 350 },
+    position: { x: 0, y:700  },
     className: "light",
   },
   {
     id: "decrypt",
     data: { label: "Decrypt", value: "123" },
-    position: { x: 120, y: 800 },
+    position: { x: 950, y: 800 },
     className: "light",
   },
   {
@@ -59,7 +60,7 @@ const initialNodes = [
   {
     id: "private key outer",
     data: { label: "Private key", value: "123" },
-    position: { x: 160, y: 200 },
+    position: { x: 0, y: 200 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
   },
@@ -73,20 +74,20 @@ const initialNodes = [
   {
     id: "public key outer",
     data: { label: "public key", value: "123" },
-    position: { x: 100, y: 600 },
+    position: { x: 950, y: 600 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
   },
   {
     id: "hash1 label",
     data: { label: "Hashing Algorithm (SHA256)", value: "123" },
-    position: { x: 420, y: 100 },
+    position: { x: 250, y: 400 },
     className: "light",
   },
   {
     id: "hash2 label",
     data: { label: "Hashing Algorithm (SHA256)", value: "123" },
-    position: { x: 100, y: 500 },
+    position: { x: 1250, y: 500 },
     className: "light",
   },
   {
@@ -96,9 +97,22 @@ const initialNodes = [
     parentNode: "hash value outer",
   },
   {
+    id: "hash value receiver's side",
+    data: { label: "Hashing Value", value: "123" },
+    position: { x: 20, y: 50 },
+    parentNode: "hash value outer receiver",
+  },
+  {
     id: "hash value outer",
     data: { label: "Hashing Value", value: "123" },
-    position: { x: 390, y: 200 },
+    position: { x: 250, y: 500 },
+    className: "light",
+    style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
+  },
+  {
+    id: "hash value outer receiver",
+    data: { label: "Hashing Value", value: "123" },
+    position: { x: 1250, y: 600 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
   },
@@ -139,13 +153,13 @@ const initialNodes = [
   {
     id: "compare",
     data: { label: "compare " },
-    position: { x: 150, y: 900 },
+    position: { x: 1050, y: 900 },
     className: "light",
   },
   {
     id: "verify",
     data: { label: "verify (correct)" },
-    position: { x: 150, y: 1000 },
+    position: { x: 1050, y: 1000 },
     // className: "light",
     backgroundColor: "green",
   },
@@ -201,7 +215,7 @@ const initialEdges = [
   {
     id: "6",
     source: "hash2 label",
-    target: "decrypt",
+    target: "hash value outer receiver",
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 12,
@@ -284,7 +298,7 @@ const initialEdges = [
   },
   {
     id: "16",
-    source: "message in receiver's side",
+    source: "hash value outer receiver",
     target: "compare",
     markerEnd: {
       type: MarkerType.ArrowClosed,
@@ -293,6 +307,7 @@ const initialEdges = [
       color: "#000000",
     },
   },
+  //{ id: "17", source: "hash value outer receiver", target: "decrypt" },
 ];
 const Page = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
