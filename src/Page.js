@@ -11,6 +11,7 @@ import ReactFlow, {
 import CryptoJS from "crypto-js";
 
 import "reactflow/dist/style.css";
+
 const initialNodes = [
   {
     id: "digital Signature outer",
@@ -160,7 +161,6 @@ const initialNodes = [
     id: "verify",
     data: { label: "verify (correct)" },
     position: { x: 1050, y: 1000 },
-    // className: "light",
     backgroundColor: "green",
   },
 ];
@@ -317,14 +317,17 @@ const Page = () => {
   const [publicKey, setPublicKey] = useState(null);
   const [signature, setSignature] = useState("");
   const [hashedMessage, setHashedMessage] = useState("");
+  const [hashedMessageReceiver, setHashedMessageReceiver] = useState("");
   const [showPrivateKey, setShowPrivateKey] = useState(false);
-
+  const [ decryptedSign,setDecrpytedSign] = useState("");
   const [elements, setElements] = useState(initialNodes);
+  const [compare, setCompare]= useState(true)
+  const [interceptedMessage, setInterceptedMessage]= useState("")
 
   const onConnect = useCallback((connection) => {
     setEdges((eds) => addEdge(connection, eds));
   }, []);
-
+  
   const generateKeyPair = async () => {
     const randomPrivateKey = CryptoJS.lib.WordArray.random(32);
     const privateKeyString = randomPrivateKey.toString(CryptoJS.enc.Hex);
@@ -334,21 +337,44 @@ const Page = () => {
     setShowPrivateKey(true);
   };
 
-  const signMessage = () => {
+  const signMessage = async () =>  {
     if (privateKey) {
       const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
       const hashedMessage = CryptoJS.SHA256(inputValue);
-      setHashedMessage(hashedMessage.toString(CryptoJS.enc.Hex));
+      await setHashedMessage(hashedMessage.toString(CryptoJS.enc.Hex));
+      await setHashedMessageReceiver(hashedMessage.toString(CryptoJS.enc.Hex));
+      console.log(hashedMessage);
+      console.log(hashedMessageReceiver);
       const signedMessage =
         privateKeyString + hashedMessage.toString(CryptoJS.enc.Hex);
+      console.log(hashedMessage.toString(CryptoJS.enc.Hex))
       setSignature(signedMessage);
     }
   };
 
+  const decryptSignature = () => {
+    const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
+    const hashedMessage = signature.substring(privateKeyString.length);
+    console.log(hashedMessage)
+    setDecrpytedSign(hashedMessage)
+    return hashedMessage;
+  };
+
+  const comparison=()=>{
+    console.log(hashedMessage==decryptedSign)
+    setCompare(hashedMessage==decryptedSign)
+  }
+
+  const intercept= ()=>{
+    setHashedMessageReceiver(interceptedMessage)
+  }
+
   const handleButtonClick = async () => {
     await generateKeyPair();
     await signMessage();
-
+    await decryptSignature();
+    await comparison();
+    await intercept();
     const updatedElements = elements.map((element) => {
       if (element.id === "text1") {
         return {
@@ -418,8 +444,33 @@ const Page = () => {
           data: { ...element.data, label: truncatedLabel }, // Update the value of the node
         };
       }
-
+      if (element.id === "hash value receiver's side") {
+        let truncatedLabel =
+          hashedMessageReceiver.length > 15
+            ? hashedMessageReceiver.substring(0, 15) + "..."
+            : hashedMessageReceiver;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+      if (element.id === "verify") {
+        // Update the style based on the condition
+        const updatedStyle = {
+          ...element.style,
+          backgroundColor: compare ? "green" : "red", // Set the background color based on the condition
+        };
+    
+        // Return the updated element with the new style
+        return {
+          ...element,
+          style: updatedStyle,
+        };
+      }
+    
+      // Return the original element if the condition doesn't match
       return element;
+
     });
 
     setNodes(updatedElements);
@@ -454,6 +505,23 @@ const Page = () => {
           <button className="button-52" onClick={handleButtonClick}>
             Lets see how digital signatures work{" "}
           </button>
+
+          <div class="form__group" style={{ height: "10px", margin: "15px" }}>
+            <input
+              type="text"
+              class="form__input"
+              id="name"
+              placeholder={inputValue}
+              required=""
+              value={interceptedMessage}
+              onChange={(e) => setInterceptedMessage(e.target.value)}
+            />
+          </div>
+          <button className="button-52" onClick={intercept}>
+            Lets Intercept the message{" "}
+          </button>
+
+
         </div>
       </div>
       <ReactFlow
