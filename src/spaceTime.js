@@ -63,7 +63,10 @@ const SpaceTime = () => {
 
   return (
     <div>
-      <h1>The Main issue with Lamport is that we can only use it once </h1>
+      <h1>Lamport Storage issues</h1>
+      <h3>The Main issue with Lamport is that the signature size is dependent on the number of bits it needs to sign</h3>
+      <h3>Lamport signature can have upto 256 bits for every 1 bit it needs to sign</h3>
+      <h2>Let's see how the size of the signature varies with the message size.</h2>
       <input
         type="number"
         value={bitSize}
@@ -75,6 +78,14 @@ const SpaceTime = () => {
         <circle className="circle" cx="400" cy="550" fill="blue" />
       </svg>
       <div>Signature Size: {bitSize*256}</div>
+      <div>
+        <h1>WOTS saving space in exchange for Time</h1>
+        <h3>If you have been through the WOTS tutorial, you know WOTS works on the principle of chain hashing</h3>
+        <h3>i.e to sign '4', it will hash the secret key 4 times</h3>
+        <h3>How will it save space?</h3>
+        <h3>WOTS converts the message into the 256bits message digest and then sign it.</h3>
+        <h2>As you can see below, the signature size will always remain the same, what will change is the time required to sign depending on how many times we need to hash the byte.</h2>
+      </div>
 
       <div style={{ textAlign: 'center' }}>
       <div style={{ width: '250px', height: '250px', backgroundColor: '#f0f0f0', borderRadius: '50%', position: 'relative', overflow: 'hidden', margin: '0 auto' }}>
