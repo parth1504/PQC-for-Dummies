@@ -64,9 +64,9 @@ const SpaceTime = () => {
   return (
     <div>
       <h1>Lamport Storage issues</h1>
-      <h3>The Main issue with Lamport is that the signature size is dependent on the number of bits it needs to sign</h3>
-      <h3>Lamport signature can have upto 256 bits for every 1 bit it needs to sign</h3>
-      <h2>Let's see how the size of the signature varies with the message size.</h2>
+      <p>The Main issue with Lamport is that the signature size is dependent on the number of bits it needs to sign
+      Lamport signature can have upto 256 bits for every 1 bit it needs to sign
+      Let's see how the size of the signature varies with the message size.</p>
       <input
         type="number"
         value={bitSize}
@@ -80,11 +80,11 @@ const SpaceTime = () => {
       <div>Signature Size: {bitSize*256}</div>
       <div>
         <h1>WOTS saving space in exchange for Time</h1>
-        <h3>If you have been through the WOTS tutorial, you know WOTS works on the principle of chain hashing</h3>
-        <h3>i.e to sign '4', it will hash the secret key 4 times</h3>
-        <h3>How will it save space?</h3>
-        <h3>WOTS converts the message into the 256bits message digest and then sign it.</h3>
-        <h2>As you can see below, the signature size will always remain the same, what will change is the time required to sign depending on how many times we need to hash the byte.</h2>
+        <p>If you have been through the WOTS tutorial, you know WOTS works on the principle of chain hashing
+        i.e to sign '4', it will hash the secret key 4 times
+        How will it save space?
+        WOTS converts the message into the 256bits message digest and then sign it.
+        As you can see below, the signature size will always remain the same, what will change is the time required to sign depending on how many times we need to hash the byte.</p>
       </div>
 
       <div style={{ textAlign: 'center' }}>

@@ -10,6 +10,7 @@ import Hash from "./hash";
 import MerkleTreeComponent from "./merkleTree";
 import SpaceTime from "./spaceTime";
 import SpaceTime2 from "./spaceTime2";
+import Sphincs from "./sphincs";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/merkletree" element={<MerkleTreeComponent/>} />
         <Route path="/spaceTime" element={<SpaceTime/>} />
         <Route path="/spaceTime2" element={<SpaceTime2/>} />
+        <Route path="/sphincs" element={<Sphincs/>} />
       </Routes>
     </Router>
   );
