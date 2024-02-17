@@ -1,4 +1,4 @@
-import Page from "./Page";
+import Page from "./DigitalSignature";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Wots from "./wots";
 import Hors from "./Hors";
