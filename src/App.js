@@ -8,6 +8,7 @@ import BitAnimation from "./text";
 import _256bit from "./_256bit";
 import Hash from "./hash";
 import MerkleTreeComponent from "./merkleTree";
+import TreeOfTrees from "./TreeOfTrees";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/hors" element={<BitAnimation/>} />
         <Route path="/wots" element={<Wots/>} />
         <Route path="/merkletree" element={<MerkleTreeComponent/>} />
+        <Route path="/treeoftrees" element={<TreeOfTrees/>} />
+
 
       </Routes>
     </Router>
