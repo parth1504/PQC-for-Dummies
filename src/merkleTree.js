@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SHA256 } from "crypto-js";
 import { MerkleTree } from "merkletreejs";
 import Draggable from "react-draggable";
@@ -67,21 +67,35 @@ const MerkleTreeComponent = () => {
     setClickedNode(null);
   };
   const [leafValues, setLeafValues] = useState([
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
   ]);
+  const [input, setInput] = useState("");
+  const [inputArray, setInputArray] = useState([]);
+  const [currentState, setCurrentState] = useState(1);
+  // const updateLeafValue = (index, value) => {
+  //   const updatedLeaves = [...leafValues];
+  //   updatedLeaves[index] = value;
+  //   setLeafValues(updatedLeaves);
+  // };
 
-  const updateLeafValue = (index, value) => {
-    const updatedLeaves = [...leafValues];
-    updatedLeaves[index] = value;
-    setLeafValues(updatedLeaves);
+  const updateInput = (value) => {
+    setInput(value);
   };
+  const submitInput = () => {
+    setInputArray([...inputArray, input]);
+    setInput("");
+    setCurrentState(currentState + 1);
+    console.log(currentState);
+    // Clear input after submission
+  };
+
   const getProof = (index) => {
     setVisibleViz(false);
     const leaves = leafValues.map((value) => SHA256(value).toString());
@@ -101,46 +115,52 @@ const MerkleTreeComponent = () => {
     setTreeVisible(true);
   };
 
+  // useEffect(() => {
+  //   if (currentState <= 8) {
+  //     highlightNode();
+  //   }
+  // }, [inputArray, currentState]);
+
+  
+
   return (
     <div>
       <h2>Merkle Tree Visualization</h2>
       {visibleViz && <div id="viz"></div>}
       <div id="viz1"></div>
-
       {!treeVisible && (
-        <div className="mt-input-div">
-          {leafValues.map((value, index) => (
-            <input
-              key={index}
-              type="text"
-              value={value}
-              onChange={(e) => updateLeafValue(index, e.target.value)}
-              className="mt-input"
-            />
-          ))}
+        <button onClick={generateTree} className="button-33">
+          Generate Tree
+        </button>
+      )}
+      {treeVisible && currentState <= 8 && (
+        <div>
+          <input
+            type="text"
+            value={input}
+            className="mt-input"
+            onChange={(e) => updateInput(e.target.value)}
+          />
+          <button onClick={submitInput}>Submit</button>
         </div>
       )}
+
       {treeVisible && (
         <div className="mt-div">
-          {leafValues.map((value, index) => (
-            <div
-              className="mt-div-individual"
-              key={index}
-              style={{ borderWidth: "10px" }}
-              onClick={() => getProof(index)}
-            >
-              {value}
-            </div>
-          ))}
+          {inputArray &&
+            inputArray.map((value, index) => (
+              <div
+                className="mt-div-individual"
+                key={index}
+                style={{ borderWidth: "10px" }}
+                onClick={() => getProof(index)}
+              >
+                {value}
+              </div>
+            ))}
         </div>
       )}
-      <button
-        onClick={generateTree}
-        className="button-33"
-        style={{ marginLeft: "570px", marginTop: "20px" }}
-      >
-        Generate Tree
-      </button>
+
       {clickedNode && (
         <Draggable>
           <div className="popup">

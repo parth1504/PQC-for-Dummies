@@ -11,14 +11,16 @@ import ReactFlow, {
 import CryptoJS from "crypto-js";
 
 import "reactflow/dist/style.css";
+
 const initialNodes = [
   {
     id: "digital Signature outer",
     data: { label: "Digital Signature" },
-    position: { x: 290, y: 420 },
+    position: { x: 0, y: 920 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 150 },
   },
+
   {
     id: "digital signature inner",
     data: { label: "sign" },
@@ -28,7 +30,7 @@ const initialNodes = [
   {
     id: "text1",
     data: { label: "Message", value: "123" },
-    position: { x: 700, y: 100 },
+    position: { x: 250, y: 200 },
     className: "light",
   },
   // {
@@ -40,13 +42,13 @@ const initialNodes = [
   {
     id: "encrypt",
     data: { label: "Encrypt", value: "123" },
-    position: { x: 310, y: 350 },
+    position: { x: 0, y:700  },
     className: "light",
   },
   {
     id: "decrypt",
     data: { label: "Decrypt", value: "123" },
-    position: { x: 120, y: 800 },
+    position: { x: 950, y: 800 },
     className: "light",
   },
   {
@@ -59,7 +61,7 @@ const initialNodes = [
   {
     id: "private key outer",
     data: { label: "Private key", value: "123" },
-    position: { x: 160, y: 200 },
+    position: { x: 0, y: 200 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
   },
@@ -73,20 +75,20 @@ const initialNodes = [
   {
     id: "public key outer",
     data: { label: "public key", value: "123" },
-    position: { x: 100, y: 600 },
+    position: { x: 950, y: 600 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
   },
   {
     id: "hash1 label",
     data: { label: "Hashing Algorithm (SHA256)", value: "123" },
-    position: { x: 420, y: 100 },
+    position: { x: 250, y: 400 },
     className: "light",
   },
   {
     id: "hash2 label",
     data: { label: "Hashing Algorithm (SHA256)", value: "123" },
-    position: { x: 100, y: 500 },
+    position: { x: 1250, y: 500 },
     className: "light",
   },
   {
@@ -96,9 +98,22 @@ const initialNodes = [
     parentNode: "hash value outer",
   },
   {
+    id: "hash value receiver's side",
+    data: { label: "Hashing Value", value: "123" },
+    position: { x: 20, y: 50 },
+    parentNode: "hash value outer receiver",
+  },
+  {
     id: "hash value outer",
     data: { label: "Hashing Value", value: "123" },
-    position: { x: 390, y: 200 },
+    position: { x: 250, y: 500 },
+    className: "light",
+    style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
+  },
+  {
+    id: "hash value outer receiver",
+    data: { label: "Hashing Value", value: "123" },
+    position: { x: 1250, y: 600 },
     className: "light",
     style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 100 },
   },
@@ -139,14 +154,13 @@ const initialNodes = [
   {
     id: "compare",
     data: { label: "compare " },
-    position: { x: 150, y: 900 },
+    position: { x: 1050, y: 900 },
     className: "light",
   },
   {
     id: "verify",
     data: { label: "verify (correct)" },
-    position: { x: 150, y: 1000 },
-    // className: "light",
+    position: { x: 1050, y: 1000 },
     backgroundColor: "green",
   },
 ];
@@ -190,7 +204,7 @@ const initialEdges = [
   {
     id: "5",
     source: "encrypt",
-    target: "digital signature outer",
+    target: "digital signature inner",
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 12,
@@ -200,8 +214,8 @@ const initialEdges = [
   },
   {
     id: "6",
-    source: "private key outer",
-    target: "hash2 label",
+    source: "hash2 label",
+    target: "hash value outer receiver",
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 12,
@@ -231,12 +245,12 @@ const initialEdges = [
       color: "#000000",
     },
   },
-  { id: "9", source: "text 1", target: "message in receiver's side" },
-  { id: "10", source: "hash2 label", target: "public key outer" },
+  { id: "9", source: "text1", target: "message in receiver's side" },
+  { id: "10", source: "message in receiver's side" ,target:"hash2 label"},
   {
     id: "11",
-    source: "encrypt",
-    target: "Digital signature in receiver's side",
+    source: "digital Signature outer",
+    target: "ds in receiver's side",
   },
   {
     id: "12",
@@ -284,7 +298,7 @@ const initialEdges = [
   },
   {
     id: "16",
-    source: "message in receiver's side",
+    source: "hash value outer receiver",
     target: "compare",
     markerEnd: {
       type: MarkerType.ArrowClosed,
@@ -302,14 +316,17 @@ const Page = () => {
   const [publicKey, setPublicKey] = useState(null);
   const [signature, setSignature] = useState("");
   const [hashedMessage, setHashedMessage] = useState("");
+  const [hashedMessageReceiver, setHashedMessageReceiver] = useState("");
   const [showPrivateKey, setShowPrivateKey] = useState(false);
-
+  const [ decryptedSign,setDecrpytedSign] = useState("");
   const [elements, setElements] = useState(initialNodes);
+  const [compare, setCompare]= useState(true)
+  const [interceptedMessage, setInterceptedMessage]= useState("")
 
   const onConnect = useCallback((connection) => {
     setEdges((eds) => addEdge(connection, eds));
   }, []);
-
+  
   const generateKeyPair = async () => {
     const randomPrivateKey = CryptoJS.lib.WordArray.random(32);
     const privateKeyString = randomPrivateKey.toString(CryptoJS.enc.Hex);
@@ -319,21 +336,44 @@ const Page = () => {
     setShowPrivateKey(true);
   };
 
-  const signMessage = () => {
+  const signMessage = async () =>  {
     if (privateKey) {
       const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
       const hashedMessage = CryptoJS.SHA256(inputValue);
-      setHashedMessage(hashedMessage.toString(CryptoJS.enc.Hex));
+      await setHashedMessage(hashedMessage.toString(CryptoJS.enc.Hex));
+      await setHashedMessageReceiver(hashedMessage.toString(CryptoJS.enc.Hex));
+      console.log(hashedMessage);
+      console.log(hashedMessageReceiver);
       const signedMessage =
         privateKeyString + hashedMessage.toString(CryptoJS.enc.Hex);
+      console.log(hashedMessage.toString(CryptoJS.enc.Hex))
       setSignature(signedMessage);
     }
   };
 
+  const decryptSignature = () => {
+    const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
+    const hashedMessage = signature.substring(privateKeyString.length);
+    console.log(hashedMessage)
+    setDecrpytedSign(hashedMessage)
+    return hashedMessage;
+  };
+
+  const comparison=()=>{
+    console.log(hashedMessage==decryptedSign)
+    setCompare(hashedMessage==decryptedSign)
+  }
+
+  const intercept= ()=>{
+    setHashedMessageReceiver(interceptedMessage)
+  }
+
   const handleButtonClick = async () => {
     await generateKeyPair();
     await signMessage();
-
+    await decryptSignature();
+    await comparison();
+    await intercept();
     const updatedElements = elements.map((element) => {
       if (element.id === "text1") {
         return {
@@ -403,8 +443,33 @@ const Page = () => {
           data: { ...element.data, label: truncatedLabel }, // Update the value of the node
         };
       }
-
+      if (element.id === "hash value receiver's side") {
+        let truncatedLabel =
+          hashedMessageReceiver.length > 15
+            ? hashedMessageReceiver.substring(0, 15) + "..."
+            : hashedMessageReceiver;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+      if (element.id === "verify") {
+        // Update the style based on the condition
+        const updatedStyle = {
+          ...element.style,
+          backgroundColor: compare ? "green" : "red", // Set the background color based on the condition
+        };
+    
+        // Return the updated element with the new style
+        return {
+          ...element,
+          style: updatedStyle,
+        };
+      }
+    
+      // Return the original element if the condition doesn't match
       return element;
+
     });
 
     setNodes(updatedElements);
@@ -439,6 +504,23 @@ const Page = () => {
           <button className="button-52" onClick={handleButtonClick}>
             Lets see how digital signatures work{" "}
           </button>
+
+          <div class="form__group" style={{ height: "10px", margin: "15px" }}>
+            <input
+              type="text"
+              class="form__input"
+              id="name"
+              placeholder={inputValue}
+              required=""
+              value={interceptedMessage}
+              onChange={(e) => setInterceptedMessage(e.target.value)}
+            />
+          </div>
+          <button className="button-52" onClick={intercept}>
+            Lets Intercept the message{" "}
+          </button>
+
+
         </div>
       </div>
       <ReactFlow
