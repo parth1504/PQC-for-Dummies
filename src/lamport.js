@@ -276,6 +276,14 @@ function Lamport() {
 
                 </div>
             </div>
+            <div className="textfield">
+          <p>
+           Try inputs 10101 and then 01010 
+            <br></br>
+            This will give you the entire secret key and you can forge somebody's message
+ 
+          </p>
+        </div>
 
 
 

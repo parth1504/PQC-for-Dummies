@@ -44,19 +44,19 @@ const MerkleTreeComponent = () => {
   const [leaves, setLeaves] = useState([]);
   const getChildren = (index, nodes) => {
     if (index === 2) {
-      setInforation(`formed by hash(${0})+ hash(${1})`);
+      setInforation(`by hash(${0})+ hash(${1})`);
     } else if (index === 5) {
-      setInforation(`formed by hash(${3})+ hash(${4})`);
+      setInforation(`by hash(${3})+ hash(${4})`);
     } else if (index === 6) {
-      setInforation(`formed by hash(${2})+ hash(${5})`);
+      setInforation(`by hash(${2})+ hash(${5})`);
     } else if (index === 9) {
-      setInforation(`formed by hash(${7})+ hash(${8})`);
+      setInforation(`by hash(${7})+ hash(${8})`);
     } else if (index === 12) {
-      setInforation(`formed by hash(${10})+ hash(${11})`);
+      setInforation(`by hash(${10})+ hash(${11})`);
     } else if (index === 13) {
-      setInforation(`formed by hash(${9})+ hash(${12})`);
+      setInforation(`by hash(${9})+ hash(${12})`);
     } else if (index === 14) {
-      setInforation(`formed by hash(${6})+ hash(${13})`);
+      setInforation(`by hash(${6})+ hash(${13})`);
     }
   };
   const handleNodeClick = (index, nodes) => {
@@ -121,11 +121,17 @@ const MerkleTreeComponent = () => {
   //   }
   // }, [inputArray, currentState]);
 
-  
-
   return (
     <div>
       <h2>Merkle Tree Visualization</h2>
+      <div className="textfield">
+        <p>
+          A leaf node is the hash of an OTS key pair <br></br>
+          The root of the merkle tree is used as a public key to sign messages{" "}
+          <br></br>
+          Click on the non-leaf nodes to see how they are generated
+        </p>
+      </div>
       {visibleViz && <div id="viz"></div>}
       <div id="viz1"></div>
       {!treeVisible && (
@@ -133,31 +139,53 @@ const MerkleTreeComponent = () => {
           Generate Tree
         </button>
       )}
-      {treeVisible && currentState <= 8 && (
-        <div>
-          <input
-            type="text"
-            value={input}
-            className="mt-input"
-            onChange={(e) => updateInput(e.target.value)}
-          />
-          <button onClick={submitInput}>Submit</button>
-        </div>
-      )}
 
       {treeVisible && (
         <div className="mt-div">
           {inputArray &&
             inputArray.map((value, index) => (
-              <div
-                className="mt-div-individual"
-                key={index}
-                style={{ borderWidth: "10px" }}
-                onClick={() => getProof(index)}
-              >
-                {value}
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div class="arrow-box-mt">{console.log(index)}</div>
+                <div
+                  className="mt-div-individual"
+                  key={index}
+                  style={{ borderWidth: "10px" }}
+                  onClick={() => getProof(index)}
+                >
+                  {value}
+                </div>
               </div>
             ))}
+        </div>
+      )}
+      {currentState <= 8 ? (
+        treeVisible && (
+          <div>
+            <input
+              type="text"
+              value={input}
+              className="mt-input"
+              onChange={(e) => updateInput(e.target.value)}
+            />
+            <button onClick={submitInput}>Submit</button>
+          </div>
+        )
+      ) : (
+        <div className="textfield">
+          <p>
+            Oops no more OTS key pairs to sign messages!<br></br>A OTS key pair
+            can be used to sign 1 message and the tree in total can sign 2 ^h
+            messages, where h is the height of the tree. <br></br>
+            This is a stateful process in which the the index of the choosen OTS
+            key pair to sign the message is stored.
+            <br></br>
+            The signature of this scheme consists of the index of the leaf value
+            here 0 ,the leaf value hash and the authentication path (click on
+            the message) and the root of the merkle tree.<br></br>
+            <br></br>
+            To see the stateless version click here{" "}
+            <a href="/treeofTrees">Collision resistance</a>.
+          </p>
         </div>
       )}
 
@@ -166,7 +194,7 @@ const MerkleTreeComponent = () => {
           <div className="popup">
             <div className="popup-content">
               <p>Clicked Node Index: {clickedNode.index}</p>
-              <p>Node Generation: {information}</p>
+              <p>Node generated: {information}</p>
               <button onClick={handleClosePopup}>Close</button>
             </div>
           </div>

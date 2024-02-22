@@ -144,20 +144,24 @@ const TreeOfTrees = () => {
 
   return (
     <>
-      <input placeholder="Enter message" />
-
-      <div className="input-container">
+      <h2>Hypertrees</h2>
+      <div className="textfield">
+        <p>
+          Here instead of storing the state like in merkle tree we compute it
+          based on the input <br></br>
+          Therefore index= f(input)
+          <br></br>
+          here t1, t2, t3 ... are merkle trees
+        </p>
+      </div>
+      <div>
         <input
-          type="text  "
+          type="number"
           value={input}
           onChange={handleInput}
           id="input"
           required=""
         />
-        <label for="input" className="label">
-          Enter message
-        </label>
-        <div className="underline"></div>
       </div>
       <button onClick={handleIndex}>submit</button>
       <div style={{ maxWidth: "100%", overflowX: "auto" }}>
@@ -179,6 +183,24 @@ const TreeOfTrees = () => {
         >
           Visualization Div
         </div>
+      </div>
+      <div className="textfield">
+        <p>
+          Try input 0 and the 8<br></br>
+          Did it give the same tree to sign?
+          <br></br>
+          This is the collison resistance property of hashing to know more click
+          on <a href="/_256bit">HyperTrees</a>.<br></br>
+          To decrease the chance collision we can increase the height of the
+          tree but that increases the signature size and signing speed.
+          <br></br>
+          <br></br>
+          Hence a tradeoff between signature size and security is observed.{" "}
+          <br></br>
+          Choosing h as 128 instead of 256 saves a factor of 2 in signature size
+          and signing speed, if it is acceptable to have probability roughly 2
+          −30 of OTS reuse.
+        </p>
       </div>
     </>
   );
