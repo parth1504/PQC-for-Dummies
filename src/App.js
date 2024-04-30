@@ -26,9 +26,8 @@ function App() {
         <Route path="/merkletree" element={<MerkleTreeComponent/>} />
         <Route path="/spaceTime" element={<SpaceTime/>} />
         <Route path="/spaceTime2" element={<SpaceTime2/>} />
-        <Route path="/sphincs" element={<Sphincs/>} />        <Route path="/treeoftrees" element={<TreeOfTrees/>} />
-
-
+        <Route path="/sphincs" element={<Sphincs/>} />       
+        <Route path="/treeoftrees" element={<TreeOfTrees/>} />
       </Routes>
     </Router>
   );

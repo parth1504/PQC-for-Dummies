@@ -126,7 +126,7 @@ function Wots() {
 
             </div>
 
-            <div className="input-container">
+            <div className="input-container1">
                 <h2>Input</h2>
                 <h4>Should range from 0-10</h4>
                 <div className="array-container">

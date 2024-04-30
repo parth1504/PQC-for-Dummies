@@ -12,6 +12,8 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import CustomTriangleNode from './triangle';
 import CustomTriangleNode2 from "./triangle2";
+import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
 
 const initialNodes=[
   {
@@ -844,10 +846,24 @@ const defaultEdges=[
   },
 ]
 export default function Sphincs() {
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleNodeMouseEnter = (event) => {
+    // Set tooltip position and show tooltip
+    setTooltipPosition({ x: event.clientX, y: event.clientY });
+    setShowTooltip(true);
+  };
+
+  const handleNodeMouseLeave = () => {
+    // Hide tooltip on mouse leave
+    setShowTooltip(false);
+  };
   return (
-    <ReactFlow defaultNodes={[...initialNodes]} defaultEdges={[...defaultEdges]} nodeTypes={nodeTypes}>
-      
- 
+    <div style={{ height: 1500 }}>
+    <ReactFlow defaultNodes={[...initialNodes]} defaultEdges={[...defaultEdges]} nodeTypes={nodeTypes} onNodeMouseEnter={handleNodeMouseEnter} onMouseLeave={handleNodeMouseLeave}> 
     </ReactFlow>
+   
+    </div>
   );
 }
