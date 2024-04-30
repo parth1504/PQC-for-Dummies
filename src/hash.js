@@ -377,7 +377,13 @@ const Hash = () => {
             <SHA256Hash />
             <_256bitSecurity />
             
-            
+            <div className="textfield">
+        <p>
+          Now that we have some basic understanding of Hash functions, Let's move on to <a href="/ds">Digital Signatures</a>.
+          
+          
+        </p>
+      </div>
         </div>
     );
 }
