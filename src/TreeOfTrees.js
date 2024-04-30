@@ -190,7 +190,7 @@ const TreeOfTrees = () => {
           Did it give the same tree to sign?
           <br></br>
           This is the collison resistance property of hashing to know more click
-          on <a href="/_256bit">HyperTrees</a>.<br></br>
+          on <a href="/256bit">HyperTrees</a>.<br></br>
           To decrease the chance collision we can increase the height of the
           tree but that increases the signature size and signing speed.
           <br></br>
