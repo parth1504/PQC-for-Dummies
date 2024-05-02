@@ -17,7 +17,7 @@ const SpaceTime = () => {
   const animateCircle = (size) => {
     anime({
       targets: '.circle',
-      r:size*(1.1),
+      r: size * (1.1),
       easing: 'easeInOutQuad',
       duration: 1000,
     });
@@ -62,49 +62,53 @@ const SpaceTime = () => {
   };
 
   return (
-    <div>
-      <h1>Lamport Storage issues</h1>
-      <p>The Main issue with Lamport is that the signature size is dependent on the number of bits it needs to sign
-      Lamport signature can have upto 256 bits for every 1 bit it needs to sign
-      Let's see how the size of the signature varies with the message size.</p>
-      <input
-        type="number"
-        value={bitSize}
-        onChange={handleBitSizeChange}
-      />
-      
-
-      <svg width="1200" height="900">
-        <circle className="circle" cx="400" cy="550" fill="blue" />
-      </svg>
-      <div>Signature Size: {bitSize*256}</div>
-      <div>
-        <h1>WOTS saving space in exchange for Time</h1>
-        <p>If you have been through the WOTS tutorial, you know WOTS works on the principle of chain hashing
-        i.e to sign '4', it will hash the secret key 4 times
-        How will it save space?
-        WOTS converts the message into the 256bits message digest and then sign it.
-        As you can see below, the signature size will always remain the same, what will change is the time required to sign depending on how many times we need to hash the byte.</p>
-      </div>
-
-      <div style={{ textAlign: 'center' }}>
-      <div style={{ width: '250px', height: '250px', backgroundColor: '#f0f0f0', borderRadius: '50%', position: 'relative', overflow: 'hidden', margin: '0 auto' }}>
-        <div
-          ref={circleRef}
-          style={{
-            width: '250%',
-            height: '250%',
-            position: 'absolute',
-            backgroundColor: '#007bff',
-            borderRadius: '50%',
-            transform: `translate(-50%, -50%) scale(${fillPercentage / 100}, ${fillPercentage / 100})`, // Scale the circle based on fill percentage
-            left: '50%', top: '50%', // Position the circle at the center
-          }}
+    <div className="storageContainer">
+      <div className='lamport'>
+        <h1>Lamport Storage issues</h1>
+        <p>The Main issue with Lamport is that the signature size is dependent on the number of bits it needs to sign
+          Lamport signature can have upto 256 bits for every 1 bit it needs to sign
+          Let's see how the size of the signature varies with the message size.</p>
+        <input
+          type="number"
+          value={bitSize}
+          onChange={handleBitSizeChange}
         />
+
+
+        <svg width="1200" height="900">
+          <circle className="circle" cx="400" cy="350" fill="blue" />
+        </svg>
+        <div>Signature Size: {bitSize * 256}</div>
       </div>
-      <input type="range" min="1" max="100" value={numHashes} onChange={handleInputChange} style={{ width: '30%', margin: '20px auto', display: 'block' }} />
-      <p>Number of Hashes: {numHashes}</p>
-    </div>
+      <div className='wots'>
+        <div>
+          <h1>WOTS saving space in exchange for Time</h1>
+          <p>If you have been through the WOTS tutorial, you know WOTS works on the principle of chain hashing
+            i.e to sign '4', it will hash the secret key 4 times
+            How will it save space?
+            WOTS converts the message into the 256bits message digest and then sign it.
+            As you can see below, the signature size will always remain the same, what will change is the time required to sign depending on how many times we need to hash the byte.</p>
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: '250px', height: '250px', backgroundColor: '#f0f0f0', borderRadius: '50%', position: 'relative', overflow: 'hidden', margin: '0 auto' }}>
+            <div
+              ref={circleRef}
+              style={{
+                width: '250%',
+                height: '250%',
+                position: 'absolute',
+                backgroundColor: '#007bff',
+                borderRadius: '50%',
+                transform: `translate(-50%, -50%) scale(${fillPercentage / 100}, ${fillPercentage / 100})`, // Scale the circle based on fill percentage
+                left: '50%', top: '50%', // Position the circle at the center
+              }}
+            />
+          </div>
+          <input type="range" min="1" max="256" value={numHashes} onChange={handleInputChange} style={{ width: '30%', margin: '20px auto', display: 'block' }} />
+          <p>Number of Hashes: {numHashes}</p>
+        </div>
+      </div>
     </div>
   );
 };

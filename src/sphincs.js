@@ -1,13 +1,13 @@
 import ReactFlow, {
-    addEdge,
-    Background,
-    useNodesState,
-    useEdgesState,
-    MiniMap,
-    Controls,
-    MarkerType,
-    BackgroundVariant
-  } from "reactflow";
+  addEdge,
+  Background,
+  useNodesState,
+  useEdgesState,
+  MiniMap,
+  Controls,
+  MarkerType,
+  BackgroundVariant
+} from "reactflow";
 
 import 'reactflow/dist/style.css';
 import CustomTriangleNode from './triangle';
@@ -15,7 +15,7 @@ import CustomTriangleNode2 from "./triangle2";
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 
-const initialNodes=[
+const initialNodes = [
   {
     id: "ROOT1",
     data: { label: "Private key", value: "123" },
@@ -113,7 +113,7 @@ const initialNodes=[
   {
     id: "ROOT3",
     data: { label: "Private key", value: "123" },
-    position: { x: 800, y:800  },
+    position: { x: 800, y: 800 },
     className: "light",
     style: { width: 150, height: 75 },
   },
@@ -171,14 +171,14 @@ const initialNodes=[
     data: { label: "Message", value: "123" },
     position: { x: 593, y: 640 },
     className: "light",
-   
+
   },
   {
     id: "child4.2",
     data: { label: "Message", value: "123" },
     position: { x: 753, y: 640 },
     className: "light",
-    
+
   },
   {
     id: "wots4.1box",
@@ -289,7 +289,7 @@ const initialNodes=[
     id: 'WOTS6.1',
     type: 'customTriangleNode',
     position: { x: 370, y: 950 },
-    data: { text: 'Hello' }, 
+    data: { text: 'Hello' },
     style: { width: 50, height: 50 },
   },
   {
@@ -346,7 +346,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 700, y: 970 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'WOTS7.2',
@@ -360,7 +360,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 805, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST1',
@@ -373,12 +373,12 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 905, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST2',
     type: 'customTriangleNode2',
-    position:{ x: 890, y: 1000 },
+    position: { x: 890, y: 1000 },
     data: { text: 'Hello' }, // Provide the text prop here
   },
   {
@@ -386,7 +386,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 165, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST3',
@@ -399,7 +399,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 265, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST4',
@@ -412,7 +412,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 385, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST5',
@@ -425,7 +425,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 485, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST6',
@@ -438,7 +438,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 615, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST7',
@@ -451,7 +451,7 @@ const initialNodes=[
     data: { label: "7.2", value: "123" },
     position: { x: 690, y: 1020 },
     className: "light",
-    style: { width:5 , height: 5 },
+    style: { width: 5, height: 5 },
   },
   {
     id: 'HORST8',
@@ -468,8 +468,8 @@ const nodeTypes = {
   customTriangleNode2: CustomTriangleNode2,
   // Add other custom node types here
 };
-const defaultEdges=[
-  
+const defaultEdges = [
+
   {
     id: "1",
     source: "ROOT1",
@@ -861,9 +861,21 @@ export default function Sphincs() {
   };
   return (
     <div style={{ height: 1500 }}>
-    <ReactFlow defaultNodes={[...initialNodes]} defaultEdges={[...defaultEdges]} nodeTypes={nodeTypes} onNodeMouseEnter={handleNodeMouseEnter} onMouseLeave={handleNodeMouseLeave}> 
-    </ReactFlow>
-   
+      <p>
+        The following is a Flowchart of how sphincs works<br></br>
+        A message is signed by a HORST(which is basically Hors with trees) key.
+        <br></br>
+         A wots key is used to sign the HORST public key. Now this WOTS public key will be sign signed by another WOTS key and so on until the root node of the tree.
+        <br></br>
+         The <a href="/treeoftrees">Hyper Tree </a> Page helps build an intuition of how this chaining would work.
+        <br></br>
+  
+        <br></br>
+      
+      </p>
+      <ReactFlow defaultNodes={[...initialNodes]} defaultEdges={[...defaultEdges]} nodeTypes={nodeTypes} onNodeMouseEnter={handleNodeMouseEnter} onMouseLeave={handleNodeMouseLeave}>
+      </ReactFlow>
+
     </div>
   );
 }
