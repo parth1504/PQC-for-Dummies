@@ -36,7 +36,7 @@ const BitAnimation = () => {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+    <div  style={{ display: 'flex', justifyContent: 'center', marginTop: '250px',flexDirection:'column',justifyContent:'center' }}>
       {Array.from({ length: 16 }, (_, index) => (
         <div key={index} id={`bit-${index}`} style={{ margin: '5px', fontSize: '20px' }}>
           {index}
