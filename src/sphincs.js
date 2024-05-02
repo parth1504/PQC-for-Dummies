@@ -25,13 +25,13 @@ const initialNodes = [
   },
   {
     id: "child1.1",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 400, y: 300 },
     className: "light",
   },
   {
     id: "child1.2",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 600, y: 300 },
     className: "light",
   },
@@ -72,13 +72,13 @@ const initialNodes = [
   },
   {
     id: "child2.1",
-    data: { label: "Message", value: "123" },
+    data: { label:"", value: "123" },
     position: { x: 243, y: 640 },
     className: "light",
   },
   {
     id: "child2.2",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 403, y: 640 },
     className: "light",
   },
@@ -119,14 +119,14 @@ const initialNodes = [
   },
   {
     id: "child3.1",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 775, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },
   },
   {
     id: "child3.2",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 875, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },
@@ -168,14 +168,14 @@ const initialNodes = [
   },
   {
     id: "child4.1",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 593, y: 640 },
     className: "light",
 
   },
   {
     id: "child4.2",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 753, y: 640 },
     className: "light",
 
@@ -217,14 +217,14 @@ const initialNodes = [
   },
   {
     id: "child5.1",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 150, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },
   },
   {
     id: "child5.2",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 250, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },
@@ -266,14 +266,14 @@ const initialNodes = [
   },
   {
     id: "child6.1",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 370, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },
   },
   {
     id: "child6.2",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 470, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },
@@ -315,14 +315,14 @@ const initialNodes = [
   },
   {
     id: "child7.1",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 600, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },
   },
   {
     id: "child7.2",
-    data: { label: "Message", value: "123" },
+    data: { label: "", value: "123" },
     position: { x: 675, y: 900 },
     className: "light",
     style: { width: 70, height: 35 },

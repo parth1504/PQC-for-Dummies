@@ -25,6 +25,7 @@ import DilithiumSigningSimulation from "./dilithiumsigning";
 import DilithiumVerification from "./dilithiumverification";
 import DilithiumDemo from "./dilithiumdemo";
 import FiatShamir from "./fiatshamir";
+import ComparisonPage  from "./ComparisonPage";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/dilithiumverification" element={<DilithiumVerification/>} />
         <Route path="/dilithiumdemo" element={<DilithiumDemo/>} />
         <Route path="/fiatshamir" element={<FiatShamir/>} />
+        <Route path="/comparison" element={<ComparisonPage/>} />
       </Routes>
     </Router>
   );

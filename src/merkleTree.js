@@ -184,7 +184,7 @@ const MerkleTreeComponent = () => {
             the message) and the root of the merkle tree.<br></br>
             <br></br>
             To see the stateless version click here{" "}
-            <a href="/treeofTrees">Collision resistance</a>.
+            <a href="/treeofTrees">Hyper Trees</a>.
           </p>
         </div>
       )}

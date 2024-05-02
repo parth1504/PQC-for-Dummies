@@ -62,6 +62,7 @@ const SpaceTime = () => {
   };
 
   return (
+    <div>
     <div className="storageContainer">
       <div className='lamport'>
         <h1>Lamport Storage issues</h1>
@@ -109,6 +110,19 @@ const SpaceTime = () => {
           <p>Number of Hashes: {numHashes}</p>
         </div>
       </div>
+      </div>
+      <div className="textfield">
+                <p>
+                    The following gives us some intuition about the space-time trade-off in lamport and wots OTS.
+                    <br></br>
+                    Lamport uses more storage but in turn takes less time to compute whereas WOTS takes more time to computes and takes less storage.
+                    <br></br>
+                    Now that we have an understanding of how One time signatures work, Let us look into Few-Time Signatures or FTS with the example of  <a href="/hors">HORS.</a>
+                    <br></br>
+                   
+                </p>
+
+            </div>
     </div>
   );
 };
