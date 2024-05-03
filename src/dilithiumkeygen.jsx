@@ -174,14 +174,14 @@ The key generation process utilizes the principles of lattice-based cryptography
             Alice derives her public key by squaring each coefficient of the secret key and taking the result modulo q (8380417). For example, if her secret key is [1, -2, 3, -4, 5, -6, 7, -8], her public key might be [1, 4, 9, 16, 25, 36, 49, 64].
           </Typography>
         </li>
-        <li>
+        {/* <li>
           <Typography variant="body1">
             Alice also generates the SIS matrix by sampling random polynomials with coefficients drawn from a Uniform distribution centered around zero and scaled by gamma2.
           </Typography>
-        </li>
+        </li> */}
         <li>
           <Typography variant="body1">
-            Alice now has a secret key, a public key, and an SIS matrix, which she can use for signing and verifying messages using the Dilithium algorithm.
+            Alice now has a secret key, a public key, which she can use for signing and verifying messages using the Dilithium algorithm.
           </Typography>
         </li>
       </ol>
@@ -190,7 +190,7 @@ The key generation process utilizes the principles of lattice-based cryptography
 <TextField label="Polynomial Degree (n)" type="number" value={n} onChange={e => setN(parseInt(e.target.value, 10))} />
 <TextField label="Modulus (q)" type="number" value={q} onChange={e => setQ(parseInt(e.target.value, 10))} />
 <TextField label="Noise for Secret Key (eta)" type="number" value={eta} onChange={e => setEta(parseInt(e.target.value, 10))} />
-<TextField label="Dimension of SIS Matrix (k)" type="number" value={k} onChange={e => setK(parseInt(e.target.value, 10))} />
+{/* <TextField label="Dimension of SIS Matrix (k)" type="number" value={k} onChange={e => setK(parseInt(e.target.value, 10))} /> */}
 <TextField label="Noise Parameter 1 (gamma1)" type="number" value={gamma1} onChange={e => setGamma1(parseFloat(e.target.value))} />
 <TextField label="Noise Parameter 2 (gamma2)" type="number" value={gamma2} onChange={e => setGamma2(parseFloat(e.target.value))} />
 </StyledControls>
@@ -211,13 +211,13 @@ The key generation process utilizes the principles of lattice-based cryptography
     />
   </animated.div>
 
-  <animated.div style={sisMatrixProps}>
+  {/* <animated.div style={sisMatrixProps}>
     <MatrixDisplay
       matrix={sisMatrix}
       title="SIS Matrix (A)"
       explanation="The SIS matrix is a key component in the Dilithium scheme. It is used in the signing algorithm to ensure that the signatures are secure and verifiable."
     />
-  </animated.div>
+  </animated.div> */}
 
       <div className="explanation">
         <p>
