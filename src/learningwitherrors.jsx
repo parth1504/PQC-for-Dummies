@@ -103,6 +103,7 @@ const LearningWithErrors = () => {
                 The graph visualizes the random error added to each sample. Each point represents the error magnitude affecting one linear equation.
                 Higher variability in the graph indicates more uncertainty in solving for <InlineMath math="\mathbf{x}" /> effectively, showcasing why LWE is considered hard when errors are significant.
             </Typography>
+            <h3><a href="/sis">Next</a></h3>
         </Container>
     );
 };
