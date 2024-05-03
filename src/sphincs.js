@@ -861,6 +861,7 @@ export default function Sphincs() {
   };
   return (
     <div style={{ height: 1500 }}>
+      <div className="textfield">
       <p>
         The following is a Flowchart of how sphincs works<br></br>
         A message is signed by a HORST(which is basically Hors with trees) key.
@@ -873,6 +874,7 @@ export default function Sphincs() {
         <br></br>
       
       </p>
+      </div>
       <ReactFlow defaultNodes={[...initialNodes]} defaultEdges={[...defaultEdges]} nodeTypes={nodeTypes} onNodeMouseEnter={handleNodeMouseEnter} onMouseLeave={handleNodeMouseLeave}>
       </ReactFlow>
 

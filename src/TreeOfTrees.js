@@ -190,7 +190,7 @@ const TreeOfTrees = () => {
           Did it give the same tree to sign?
           <br></br>
           This is the collison resistance property of hashing to know more click
-          on <a href="/256bit">HyperTrees</a>.<br></br>
+          <a href="/"> Here</a>.<br></br>
           To decrease the chance collision we can increase the height of the
           tree but that increases the signature size and signing speed.
           <br></br>
@@ -204,6 +204,8 @@ const TreeOfTrees = () => {
           <br></br>
           Choosing h as 128 instead of 256 saves a factor of 2 in signature size
           and signing speed, if it is acceptable to have probability roughly 2−30 of OTS reuse.
+          <br></br>
+          So what does 256 bit security mean? <a href="/256">Click here</a>
           <br></br>
           To put it all together, <a href="/sphincs">Click here </a>`to see how the entire flow of sphincs algorithm looks like!
         </p>

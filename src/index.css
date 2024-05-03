@@ -3,7 +3,7 @@ body,
 #root {
   width: 100%;
   height: 100%;
-  margin: 0;
+  margin: 20px;
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
@@ -362,7 +362,7 @@ body,
 }
 
 .mt-div {
-  margin-left: 257px;
+  margin-left: 264px;
   display: flex;
   flex-direction: row;
 }
@@ -492,7 +492,7 @@ body,
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
       rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     margin-top: 20px;
-    margin-left: 50px;
+   
     line-height: 1.7;
     font-size: 18px;
   }

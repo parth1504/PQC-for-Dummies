@@ -158,6 +158,7 @@ function Lamport() {
 
     return (
         <div>
+            <h2>Lamport OTS Scheme</h2>
             <div className="array-container" style={{ padding: '20px' }}>
                 <button onClick={generateRandomArrays}>Generate keys</button>
             </div>

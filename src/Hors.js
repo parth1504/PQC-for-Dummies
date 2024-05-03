@@ -272,6 +272,8 @@ const Hors = () => {
 
   return (
     <div style={{ height: "80%" }}>
+      <h2>HORS FTS Scheme</h2>
+
       <div className="textfield">
         <p>
           Try inputs 10101 and then 01010

@@ -79,6 +79,8 @@ function Wots() {
 
     return (
         <div>
+        <h2>Winternitz-OTS Scheme (WOTS)</h2>
+
         <div className="wots-container">
            
             <div className="public-key">
@@ -105,9 +107,9 @@ function Wots() {
                 </div>
 
                 <h1>Public Key</h1>
-                <h4>Each secret key byte is hashed 256 times in order to obtain its respective public key</h4>
-                <h4>sk(i) will be hashed 256 times to get pk(i)</h4>
-                <h4>Note: for simplicity sake we have only hashed it 10 times in this code snippet but in practice we hash it 256 times.</h4>
+                <p>Each secret key byte is hashed 256 times in order to obtain its respective public key</p>
+                <p>sk(i) will be hashed 256 times to get pk(i)</p>
+                <p>Note: for simplicity sake we have only hashed it 10 times in this code snippet but in practice we hash it 256 times.</p>
                 <div className="array-container">
                     {pk.map((value, index) =>
                     (
@@ -130,7 +132,7 @@ function Wots() {
 
             <div className="input-container1" style={{ float: 'right', marginLeft: '20px' }}>
                 <h2>Input</h2>
-                <h4>Should range from 0-10. (this number would be upto 256 in real world)</h4>
+                <p>Should range from 0-10. (this number would be upto 256 in real world)</p>
                 <div className="array-container">
                     {inputArray.map((value, index) => (
                         <div key={index} className="array-box2">
@@ -144,7 +146,7 @@ function Wots() {
                     ))}
                 </div>
                 <h2>Digital Signature</h2>
-                <h4>The ith bit of secret key will be hashed input(i) times in order to generate the digital signature</h4>
+                <p>The ith bit of secret key will be hashed input(i) times in order to generate the digital signature</p>
                 <div className="array-container">
                     {inputArray.map((value, index) => (
                         <div key={index} className={`array-box2`} style={{ animationDelay: `${index * 1}s` }}>
@@ -153,7 +155,7 @@ function Wots() {
                         
                     ))}
                 </div>
-                <h4>DS array:</h4>
+                <p>DS array:</p>
                 <div className="array-container">
                     {sk.map((value, index) => (
                         <div key={index} className={`array-box2`} style={{ animationDelay: `${index * 1}s` }}>
@@ -162,8 +164,8 @@ function Wots() {
                         
                     ))}
                 </div>
-                <h4>On receiver's side, we hash the ith bit of digital signature array N - input(i) times and compare it with public key in order to verify the signature</h4>
-                <h4>Note: In practice N is generally 256, but for simplicity sake we have used N = 10</h4>
+                <p>On receiver's side, we hash the ith bit of digital signature array N - input(i) times and compare it with public key in order to verify the signature</p>
+                <p>Note: In practice N is generally 256, but for simplicity sake we have used N = 10</p>
                 <div className="array-container">
                     {pk.map((value, index) => (
                         <div key={index} className={`array-box2`} style={{ height:"70 px", animationDelay: `${index * 1}s` }}>

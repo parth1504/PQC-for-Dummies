@@ -218,6 +218,19 @@ const BitAnimation = () => {
   return (
     
     <div>
+       <div className="textfield">
+                <p>
+                    The Main limitation of Lamport OTS and WOTS was that they were One time Signatures, i.e. they aren't safe to use after one use.
+                    <br></br>
+                    HORS is a FTS or Few-Time Signature Scheme. That means it can be used to sign messages more than once.
+                    <br></br>
+                    Why? Since it uses a subset of keys based on the input, as you can see below.
+                    Multiple subsets are used to sign a message here.
+                    <br></br>
+                    Bonus point: HORST is the combination of using HORS with <a href="/merkletree">Merkle Trees.</a>
+                </p>
+
+            </div>
       
     <div
       style={{
@@ -359,19 +372,7 @@ const BitAnimation = () => {
         This is your Digital Signature!
       </div>
     </div>
-    <div className="textfield">
-                <p>
-                    The Main limitation of Lamport OTS and WOTS was that they were One time Signatures, i.e. they aren't safe to use after one use.
-                    <br></br>
-                    HORS is a FTS or Few-Time Signature Scheme. That means it can be used to sign messages more than once.
-                    <br></br>
-                    Why? Since it uses a subset of keys based on the input, as you can see above.
-                    Multiple subsets are used to sign a message here.
-                    <br></br>
-                    Bonus point: HORST is the combination of using HORS with <a href="/merkletree">Merkle Trees.</a>
-                </p>
-
-            </div>
+   
     </div>
   );
 };

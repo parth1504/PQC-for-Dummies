@@ -65,6 +65,7 @@ const SpaceTime = () => {
     <div>
     <div className="storageContainer">
       <div className='lamport'>
+        
         <h1>Lamport Storage issues</h1>
         <p>The Main issue with Lamport is that the signature size is dependent on the number of bits it needs to sign
           Lamport signature can have upto 256 bits for every 1 bit it needs to sign
