@@ -24,6 +24,7 @@ import DilithiumSigningSimulation from "./dilithiumsigning";
 import DilithiumVerification from "./dilithiumverification";
 import DilithiumDemo from "./dilithiumdemo";
 import FiatShamir from "./fiatshamir";
+import ComparisonPage  from "./ComparisonPage";
 
 function App() {
   return (
@@ -38,9 +39,12 @@ function App() {
         <Route path="/merkletree" element={<MerkleTreeComponent/>} />
         <Route path="/spaceTime" element={<SpaceTime/>} />
         <Route path="/spaceTime2" element={<SpaceTime2/>} />
-        <Route path="/sphincs" element={<Sphincs/>} />        <Route path="/treeoftrees" element={<TreeOfTrees/>} />
+        <Route path="/sphincs" element={<Sphincs/>} />       
+        <Route path="/treeoftrees" element={<TreeOfTrees/>} />
         <Route path="/latticecryptography" element={<LatticeCryptography/>} />
         <Route path="/svpcvp" element={<SVPCVP/>} />
+        <Route path="/svpcvptwo" element={<SVPCVPTWO/>} />
+        <Route path="/cryptocomparison" element={<CryptoComparison/>} />
         <Route path="/averagevsworstcase" element={<AverageVsWorstCase/>} />
         <Route path="/sis" element={<SIS/>} />
         <Route path="/lwe" element={<LearningWithErrors/>} />
@@ -48,9 +52,9 @@ function App() {
         <Route path="/dilithiumkeygen" element={<DilithiumKeyGeneration/>} />
         <Route path="/dilithiumsigning" element={<DilithiumSigningSimulation/>} />
         <Route path="/dilithiumverification" element={<DilithiumVerification/>} />
+        <Route path="/dilithiumdemo" element={<DilithiumDemo/>} />
         <Route path="/fiatshamir" element={<FiatShamir/>} />
-
-
+        <Route path="/comparison" element={<ComparisonPage/>} />
       </Routes>
     </Router>
   );

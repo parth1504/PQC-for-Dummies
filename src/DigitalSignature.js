@@ -18,7 +18,7 @@ const initialNodes = [
     data: { label: "Digital Signature" },
     position: { x: 0, y: 920 },
     className: "light",
-    style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 150 },
+    style: { backgroundColor: "rgba(255, 0, 0, 0.2)", width: 200, height: 150,fontSize: "20px" },
   },
 
   {
@@ -33,12 +33,7 @@ const initialNodes = [
     position: { x: 250, y: 200 },
     className: "light",
   },
-  // {
-  //   id: "text2",
-  //   data: { label: "Message",value: "123" },
-  //   position: { x: 650, y: 800 },
-  //   className: "light",
-  // },
+
   {
     id: "encrypt",
     data: { label: "Encrypt", value: "123" },
@@ -327,53 +322,31 @@ const Page = () => {
     setEdges((eds) => addEdge(connection, eds));
   }, []);
   
+
+  
   const generateKeyPair = async () => {
     const randomPrivateKey = CryptoJS.lib.WordArray.random(32);
     const privateKeyString = randomPrivateKey.toString(CryptoJS.enc.Hex);
     setPrivateKey(privateKeyString);
+    console.log(privateKey)
     const hashedPublicKey = CryptoJS.SHA256(privateKeyString);
     setPublicKey(hashedPublicKey.toString(CryptoJS.enc.Hex));
     setShowPrivateKey(true);
   };
 
-  const signMessage = async () =>  {
-    if (privateKey) {
-      const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
-      const hashedMessage = CryptoJS.SHA256(inputValue);
-      await setHashedMessage(hashedMessage.toString(CryptoJS.enc.Hex));
-      await setHashedMessageReceiver(hashedMessage.toString(CryptoJS.enc.Hex));
-      console.log(hashedMessage);
-      console.log(hashedMessageReceiver);
-      const signedMessage =
-        privateKeyString + hashedMessage.toString(CryptoJS.enc.Hex);
-      console.log(hashedMessage.toString(CryptoJS.enc.Hex))
-      setSignature(signedMessage);
-    }
-  };
 
-  const decryptSignature = () => {
-    const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
-    const hashedMessage = signature.substring(privateKeyString.length);
-    console.log(hashedMessage)
-    setDecrpytedSign(hashedMessage)
-    return hashedMessage;
-  };
-
-  const comparison=()=>{
-    console.log(hashedMessage==decryptedSign)
-    setCompare(hashedMessage==decryptedSign)
-  }
-
-  const intercept= ()=>{
-    setHashedMessageReceiver(interceptedMessage)
-  }
 
   const handleButtonClick = async () => {
-    await generateKeyPair();
-    await signMessage();
-    await decryptSignature();
-    await comparison();
-    await intercept();
+      const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
+      const hashedMessage = CryptoJS.SHA256(inputValue).toString(CryptoJS.enc.Hex);
+
+      const hashedMessageReceiver = hashedMessage.toString(CryptoJS.enc.Hex);
+      const signature =
+        privateKeyString + hashedMessage.toString(CryptoJS.enc.Hex);
+    const decryptedSign=signature.substring(privateKey.toString(CryptoJS.enc.Hex).length)
+    const compare=hashedMessage==decryptedSign
+    setHashedMessageReceiver(interceptedMessage)
+
     const updatedElements = elements.map((element) => {
       if (element.id === "text1") {
         return {
@@ -390,7 +363,7 @@ const Page = () => {
       if (element.id === "message in receiver's side") {
         return {
           ...element,
-          data: { ...element.data, label: inputValue }, // Update the value of the node
+          data: { ...element.data, label: inputValue },
         };
       }
       if (element.id === "private key") {
@@ -400,7 +373,7 @@ const Page = () => {
             : privateKey;
         return {
           ...element,
-          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+          data: { ...element.data, label: truncatedLabel },
         };
       }
       if (element.id === "public key") {
@@ -410,7 +383,7 @@ const Page = () => {
             : publicKey;
         return {
           ...element,
-          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+          data: { ...element.data, label: truncatedLabel },
         };
       }
       if (element.id === "digital signature inner") {
@@ -420,7 +393,7 @@ const Page = () => {
             : signature;
         return {
           ...element,
-          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+          data: { ...element.data, label: truncatedLabel },
         };
       }
       if (element.id === "ds in receiver's side") {
@@ -434,6 +407,7 @@ const Page = () => {
         };
       }
       if (element.id === "hash value") {
+        console.log(hashedMessage)
         let truncatedLabel =
           hashedMessage.length > 15
             ? hashedMessage.substring(0, 15) + "..."
@@ -474,6 +448,121 @@ const Page = () => {
 
     setNodes(updatedElements);
   };
+
+  const handleButtonClick2 = async () => {
+    const privateKeyString = privateKey.toString(CryptoJS.enc.Hex);
+      const hashedMessageSender = CryptoJS.SHA256(inputValue).toString(CryptoJS.enc.Hex);
+    const hashedMessage = CryptoJS.SHA256(interceptedMessage).toString(CryptoJS.enc.Hex);
+
+    const signature =
+        privateKeyString + hashedMessageSender.toString(CryptoJS.enc.Hex);
+    const decryptedSign=signature.substring(privateKey.toString(CryptoJS.enc.Hex).length)
+    const compare=hashedMessage==decryptedSign
+    const updatedElements = elements.map((element) => {
+      if (element.id === "text1") {
+        return {
+          ...element,
+          data: { ...element.data, label: inputValue }, // Update the value of the node
+        };
+      }
+      if (element.id === "text2") {
+        return {
+          ...element,
+          data: { ...element.data, label: inputValue }, // Update the value of the node
+        };
+      }
+      
+      if (element.id === "private key") {
+        let truncatedLabel =
+          privateKey.length > 15
+            ? privateKey.substring(0, 15) + "..."
+            : privateKey;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+      if (element.id === "public key") {
+        let truncatedLabel =
+          publicKey.length > 15
+            ? publicKey.substring(0, 15) + "..."
+            : publicKey;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+      if (element.id === "digital signature inner") {
+        let truncatedLabel =
+          signature.length > 15
+            ? signature.substring(0, 15) + "..."
+            : signature;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+      if (element.id === "ds in receiver's side") {
+        let truncatedLabel =
+          signature.length > 15
+            ? signature.substring(0, 15) + "..."
+            : signature;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+      if (element.id === "message in receiver's side") {
+
+        const updatedStyle = {
+          ...element.style,
+        };
+        return {
+          ...element,
+          data: { ...element.data, label: interceptedMessage },
+          style: updatedStyle, // Update the value of the node
+        };
+      }
+      if (element.id === "hash value") {
+        let truncatedLabel =
+          hashedMessageSender.length > 15
+            ? hashedMessageSender.substring(0, 15) + "..."
+            : hashedMessageSender;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+     
+
+      if (element.id === "hash value receiver's side") {
+        let truncatedLabel =
+          hashedMessage.length > 15
+            ? hashedMessage.substring(0, 15) + "..."
+            : hashedMessage;
+        return {
+          ...element,
+          data: { ...element.data, label: truncatedLabel }, // Update the value of the node
+        };
+      }
+      if (element.id === "verify") {
+        // Update the style based on the condition
+        const updatedStyle = {
+          ...element.style,
+          backgroundColor: compare ? "green" : "red", // Set the background color based on the condition
+        };
+    
+        return {
+          ...element,
+          style: updatedStyle,
+        };
+      }
+      return element;
+    });
+    setNodes(updatedElements);
+
+  }
+
   return (
     <div style={{ height: "85%" }}>
       <div
@@ -485,14 +574,14 @@ const Page = () => {
         }}
       >
         <button className="button-56" onClick={generateKeyPair}>
-          Generate Random Key Pair
+          Generate Random Key
         </button>
         {showPrivateKey && <div style={{ margin: "20px" }}>{privateKey}</div>}
         <div style={{ display: "flex" }}>
-          <div class="form__group" style={{ height: "10px", margin: "15px" }}>
+          <div className="form__group" style={{ height: "10px", margin: "15px" }}>
             <input
               type="text"
-              class="form__input"
+              className="form__input"
               id="name"
               placeholder="Enter message"
               required=""
@@ -505,10 +594,10 @@ const Page = () => {
             Lets see how digital signatures work{" "}
           </button>
 
-          <div class="form__group" style={{ height: "10px", margin: "15px" }}>
+          <div className="form__group" style={{ height: "10px", margin: "15px" }}>
             <input
               type="text"
-              class="form__input"
+              className="form__input"
               id="name"
               placeholder={inputValue}
               required=""
@@ -516,7 +605,7 @@ const Page = () => {
               onChange={(e) => setInterceptedMessage(e.target.value)}
             />
           </div>
-          <button className="button-52" onClick={intercept}>
+          <button className="button-52" onClick={handleButtonClick2}>
             Lets Intercept the message{" "}
           </button>
 
@@ -538,6 +627,19 @@ const Page = () => {
         <Controls />
         <Background />
       </ReactFlow>
+      <div className="textfield">
+        <p>
+          Try intercepting the message that is being sent on the receiver's side<br></br>
+          Digital signatures help verify the sender and ensure the message is not tampered with.
+          <br></br>
+          In traditional digital signature schemes, if a signer's 
+          private key is compromised at any point, all signatures made with that key become vulnerable to forgery. 
+          However, with One Time Signatures (OTS), each signature uses a unique key pair, so even if one key is compromised, 
+          only the corresponding signature is affected. Past signatures remain secure, providing forward security.
+          <br />
+          Click here to know more about <a href="/lamport">OTS</a>.
+        </p>
+      </div>
     </div>
   );
 };

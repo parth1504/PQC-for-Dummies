@@ -190,16 +190,22 @@ const TreeOfTrees = () => {
           Did it give the same tree to sign?
           <br></br>
           This is the collison resistance property of hashing to know more click
-          on <a href="/_256bit">HyperTrees</a>.<br></br>
+          on <a href="/256bit">HyperTrees</a>.<br></br>
           To decrease the chance collision we can increase the height of the
           tree but that increases the signature size and signing speed.
           <br></br>
           <br></br>
           Hence a tradeoff between signature size and security is observed.{" "}
           <br></br>
+          So how do hyper Trees work? Imagine the number of such trees so high that the probability of collision would be close to 0.
+          That is exactly what Hyper Tree does.
+          <br></br>
+          We can set h i.e the height if the tree high in order to increase the security and reduce the chances of collision.
+          <br></br>
           Choosing h as 128 instead of 256 saves a factor of 2 in signature size
-          and signing speed, if it is acceptable to have probability roughly 2
-          −30 of OTS reuse.
+          and signing speed, if it is acceptable to have probability roughly 2−30 of OTS reuse.
+          <br></br>
+          To put it all together, <a href="/sphincs">Click here </a>`to see how the entire flow of sphincs algorithm looks like!
         </p>
       </div>
     </>

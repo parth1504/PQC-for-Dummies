@@ -266,7 +266,7 @@ function Lamport() {
                         </div>
                         <div style={{ padding: '20px' }}>
                             <button onClick={verifyAndSetSignature}>
-                                Signature Match:   
+                                Signature Match:
                             </button>
                             <text>{isSignatureValid ? '    Yes' : '    No'}</text>
 
@@ -277,13 +277,22 @@ function Lamport() {
                 </div>
             </div>
             <div className="textfield">
-          <p>
-           Try inputs 10101 and then 01010 
-            <br></br>
-            This will give you the entire secret key and you can forge somebody's message
- 
-          </p>
-        </div>
+                <p>
+                    Try inputs 10101 and then 01010
+                    <br></br>
+                    This will give you the entire secret key and you can forge somebody's message
+                    <br></br>
+                    This is what an OTS or One Time Signature means, here as soon as you tried 2 different inputs you got access to the entire set of keys.
+                    This makes Lamport OTS unsafe to use more than once.
+                    <br></br>
+                    We also need to store large arrays as keys in lamport OTS, if we wanted to sign a byte instead of a bit, we would have to store 8 arrays instead of 2.
+                    since each value from 0 to 7 would have required a different array.
+                    <br></br>
+                    In order to solve the problem of Storage, we use WOTS, which is another OTS method. So let us move on to <a href="/wots">WOTS</a>
+
+                </p>
+
+            </div>
 
 
 

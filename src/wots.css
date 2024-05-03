@@ -3,18 +3,26 @@
     display: flex;
     flex-direction: row;
 }
+.wots-container {
+    display: flex;
+  }
+  
+  .public-key, .input-container1 {
+    flex: 1; /* Make both sections equally sized */
+    padding: 20px;
+  }
 
-.array-box {
+.array-box2 {
+    color: #000;
     padding: 8px;
     margin: 4px;
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
-    background-color: #f0f0f0;
-    font-weight: bold;
-    font-size: 20px;
-    min-width: 40px;
-    min-height: 40px;
+    background-color: #efe9e9;
+    font-size: 15px;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,7 +87,7 @@
 }
 
 /* Add animation delay for the input container */
-.input-container .array-box {
+.input-container1 .array-box {
     animation-delay: 3s;
 }
 /* CSS for connecting arrows */

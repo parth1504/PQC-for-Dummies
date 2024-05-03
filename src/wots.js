@@ -78,17 +78,19 @@ function Wots() {
     };
 
     return (
+        <div>
         <div className="wots-container">
+           
+            <div className="public-key">
             <div className="array-container" style={{ padding: '20px' }}>
                 <button className='button-wots' onClick={generateRandomArrays}>Generate keys</button>
             </div>
-            <div className="public-key">
                 <h1>Private Key</h1>
                 <h3>Private key is the sk array</h3>
                 <div className="array-container">
                     {sk.map((value, index) =>
                     (
-                        <div key={index} className={`array-box`}>
+                        <div key={index} className={`array-box2`}>
                             <text>sk{index}</text>
                         </div>
                     ))}
@@ -96,7 +98,7 @@ function Wots() {
                 <div className="array-container">
 
                     {sk.map((value, index) => (
-                        <div key={index} className={`array-box`}>
+                        <div key={index} className={`array-box2`}>
                             <text>{value}</text>
                         </div>
                     ))}
@@ -109,14 +111,14 @@ function Wots() {
                 <div className="array-container">
                     {pk.map((value, index) =>
                     (
-                        <div key={index} className={`array-box`}>
+                        <div key={index} className={`array-box2`}>
                             <text>pk{index}</text>
                         </div>
                     ))}
                 </div>
                 <div className="array-container">
                     {pk.map((value, index) => (
-                        <div key={index} className={`array-box`} style={{ animationDelay: `${index * 1}s` }}>
+                        <div key={index} className={`array-box2`} style={{ animationDelay: `${index * 1}s` }}>
                             <CountUp end={value} duration={2} />{/* Use CountUp component */}
                         </div>
                     ))}
@@ -126,16 +128,17 @@ function Wots() {
 
             </div>
 
-            <div className="input-container">
+            <div className="input-container1" style={{ float: 'right', marginLeft: '20px' }}>
                 <h2>Input</h2>
-                <h4>Should range from 0-10</h4>
+                <h4>Should range from 0-10. (this number would be upto 256 in real world)</h4>
                 <div className="array-container">
                     {inputArray.map((value, index) => (
-                        <div key={index} className="array-box">
+                        <div key={index} className="array-box2">
                             <input
                                 type="number"
                                 value={value}
                                 onChange={(e) => updateValue(index, parseInt(e.target.value))}
+                                style={{ width:"25px"}}
                             />
                         </div>
                     ))}
@@ -144,7 +147,7 @@ function Wots() {
                 <h4>The ith bit of secret key will be hashed input(i) times in order to generate the digital signature</h4>
                 <div className="array-container">
                     {inputArray.map((value, index) => (
-                        <div key={index} className={`array-box`} style={{ animationDelay: `${index * 1}s` }}>
+                        <div key={index} className={`array-box2`} style={{ animationDelay: `${index * 1}s` }}>
                             <text>Hash SK{index}  <CountUp end={inputArray[index]} duration={2} /> Times</text>
                         </div>
                         
@@ -153,7 +156,7 @@ function Wots() {
                 <h4>DS array:</h4>
                 <div className="array-container">
                     {sk.map((value, index) => (
-                        <div key={index} className={`array-box`} style={{ animationDelay: `${index * 1}s` }}>
+                        <div key={index} className={`array-box2`} style={{ animationDelay: `${index * 1}s` }}>
                            <CountUp end={chainHash(value,inputArray[index])} duration={2} />
                         </div>
                         
@@ -163,7 +166,7 @@ function Wots() {
                 <h4>Note: In practice N is generally 256, but for simplicity sake we have used N = 10</h4>
                 <div className="array-container">
                     {pk.map((value, index) => (
-                        <div key={index} className={`array-box`} style={{ animationDelay: `${index * 1}s` }}>
+                        <div key={index} className={`array-box2`} style={{ height:"70 px", animationDelay: `${index * 1}s` }}>
                             <text>Hash DS{index} N- <CountUp end={inputArray[index]} duration={2} /> Times</text>
                         </div>
                     ))}
@@ -171,7 +174,7 @@ function Wots() {
 
                 <div className="array-container">
                     {recevierSide.map((value, index) => (
-                        <div key={index} className={`array-box`} style={{ animationDelay: `${index * 1}s` }}>
+                        <div key={index} className={`array-box2`} style={{ animationDelay: `${index * 1}s` }}>
                            <CountUp end={value} duration={2} />
                         </div>
                         
@@ -180,8 +183,29 @@ function Wots() {
 
 
             </div>
+            
 
         </div>
+        <div className="textfield">
+                <p>
+                    What Wots essentially does is that, it will hash the ith byte of the key, input[i] times.
+                    <br></br>
+                    So when you put in an input 5 in the 1st byte, it should hash 1st byte of the sk array 5 time.
+                    <br></br>
+                    As mentioned above, we get the public key by hashing the private key 256 times.
+                    In the receiver side, in order to verify the byte, we would hash the 1st byte of digital signature array [256-5] i.e. 251 times.
+                    <br></br>
+                    By using the chain hashing method, we can see how wots eliminates the need of storage, as it generates the key by hashing on demand.
+                    <br></br>
+                    Trade-off Alert!! This would also mean a significant increase in computation time. Imagine having to hash a key 256 times.
+                    For a visual representation of this trade-off <a href="/spaceTime">Click Here</a>
+                     
+
+                </p>
+
+            </div>
+        </div>
+        
     );
 }
 
