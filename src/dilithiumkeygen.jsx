@@ -1,62 +1,134 @@
 import React, { useState, useEffect } from 'react';
 import { animated, useSpring } from 'react-spring';
-import { Grid, TextField, Button, Typography, Card, CardContent } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip'; // Import a tooltip component for detailed explanations
+import { TextField, Typography } from '@mui/material';
+import styled from 'styled-components';
+import Tooltip from '@mui/material/Tooltip';
 
-/**
- * Displays each polynomial term clearly, helping users understand how each part of the key is constructed.
- * The Tooltip component provides an on-demand detailed explanation of what each coefficient represents.
- */
+// Styling adjustments for a more modern and clean aesthetic
+const StyledContainer = styled.div`
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+`;
+
+const StyledTitle = styled.h1`
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+`;
+
+const StyledSection = styled.section`
+  margin: 20px 0 40px;
+`;
+
+const StyledControls = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+`;
+
+const StyledPolynomial = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px 0;
+
+  span {
+    padding: 5px 8px;
+    margin: 0 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: #6200ea;
+    border-radius: 4px;
+
+    &.positive {
+      background: #4caf50;
+    }
+
+    &.negative {
+      background: #f44336;
+    }
+  }
+`;
+
+const StyledExplanation = styled.p`
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  text-align: justify;
+`;
+
+const StyledMatrix = styled.table`
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+
+  td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    background: #f0f0f0;
+  }
+`;
+
+// Function components remain unchanged but now use enhanced styled components
+const Display = ({ title, children, explanation }) => (
+  <StyledSection>
+    <Typography variant="h6" gutterBottom>{title}</Typography>
+    {children}
+    <StyledExplanation>{explanation}</StyledExplanation>
+  </StyledSection>
+);
+
 const PolynomialDisplay = ({ vector, title, explanation }) => (
-  <div className="polynomial-display">
-    <h3>{title}</h3>
-    <div className="polynomial">
+  <Display title={title} explanation={explanation}>
+    <StyledPolynomial>
       {vector.map((coeff, idx) => (
-        <Tooltip title={`Coefficient of x^${idx}: ${coeff}`} placement="top" arrow>
-          <span key={idx} className={`coefficient ${coeff >= 0 ? 'positive' : 'negative'}`}>
-            {coeff !== 0 ? `${coeff > 0 ? '+' : ''}${coeff}x^${idx}` : ''}
+        <Tooltip title={`Coefficient of x^${idx}: ${coeff}`} placement="top" arrow key={idx}>
+          <span className={`coefficient ${coeff >= 0 ? 'positive' : 'negative'}`}>
+            {`${coeff >= 0 ? '+' : ''}${coeff}x^${idx}`}
           </span>
         </Tooltip>
       ))}
-    </div>
-    <p>{explanation}</p>
-  </div>
+    </StyledPolynomial>
+  </Display>
 );
 
-/**
- * Detailed interactive explanation of how matrices function in cryptographic schemes, especially for the SIS problem.
- */
 const MatrixDisplay = ({ matrix, title, explanation }) => (
-  <div className="matrix-display">
-    <h3>{title}</h3>
-    <table>
+  <Display title={title} explanation={explanation}>
+    <StyledMatrix>
       <tbody>
         {matrix.map((row, rowIndex) => (
           <tr key={rowIndex}>
             {row.map((val, colIndex) => (
-              <Tooltip title={`Matrix value at row ${rowIndex + 1}, column ${colIndex + 1}: ${val}`} placement="top" arrow>
-                <td key={colIndex}>{val}</td>
+              <Tooltip title={`Value at row ${rowIndex + 1}, column ${colIndex + 1}: ${val}`} key={`${rowIndex}-${colIndex}`}>
+                <td>{val}</td>
               </Tooltip>
             ))}
           </tr>
         ))}
       </tbody>
-    </table>
-    <p>{explanation}</p>
-  </div>
+    </StyledMatrix>
+  </Display>
 );
 
-/**
- * DilithiumKeyGeneration component simulates the process of key generation, including interactive and educational tooltips
- * explaining the sampling and significance of polynomial coefficients and matrix entries.
- */
+// Component logic and JSX structure remains essentially the same
+// The appearance of each part of the interface has been updated to enhance the user experience
+
+
 const DilithiumKeyGeneration = () => {
   const [n, setN] = useState(8);
   const [q, setQ] = useState(8380417);
   const [eta, setEta] = useState(2);
-  const [k, setK] = useState(20);
+  const [k, setK] = useState(4);
   const [gamma1, setGamma1] = useState(0.07 * q);
-  const [gamma2, setGamma2] = useState(0.5);
+  const [gamma2, setGamma2] = useState(0.4);
 
   const [secretKey, setSecretKey] = useState([]);
   const [publicKey, setPublicKey] = useState([]);
@@ -67,102 +139,96 @@ const DilithiumKeyGeneration = () => {
   const sisMatrixProps = useSpring({ opacity: 1, from: { opacity: 0 }, reset: true });
 
   useEffect(() => {
-    // Generates random coefficients for polynomials based on a Gaussian distribution scaled by the noise parameter
-    function generatePolynomial(degree, scale) {
-      return Array.from({ length: degree }, () => Math.floor(Math.random() * (2 * scale + 1)) - scale);
-    }
-
     setSecretKey(generatePolynomial(n, gamma1));
-    setPublicKey(generatePolynomial(n, gamma1));
-    setSisMatrix(Array.from({ length: n }, () => generatePolynomial(n, gamma2)));
-  }, [n, gamma1, gamma2]);
+    setPublicKey(generatePolynomial(n, gamma1).map(coeff => (coeff ** 2) % q));
+    setSisMatrix(generateSisMatrix(n, k, gamma2));
+  }, [n, q, gamma1, gamma2, k]);
+
+    // Key generation logic
+const generatePolynomial = (degree, scale) => { return Array.from({ length: degree }, () => Math.floor(Math.random() * (2 * scale + 1)) - scale);};
+
+// SIS matrix generation logic
+const generateSisMatrix = (degree, matrixDim, scale) => {
+  return Array.from({ length: matrixDim }, () => generatePolynomial(degree, scale));
+};
+
 
   return (
-    <div className="key-generator-container">
-      <h1>Dilithium Key Generation Simulation</h1>
-      <Typography variant="h5" gutterBottom>Key Generation</Typography>
-<Typography variant="body1" gutterBottom>
-  The Dilithium key generation process involves sampling random polynomials from a discrete Gaussian distribution. These polynomials form the secret key and the public key.
-</Typography>
-<Typography variant="body1" gutterBottom>
-  The secret key is a random polynomial with coefficients drawn from a Gaussian distribution centered around zero. This ensures that the secret key has high entropy and is difficult to guess.
-</Typography>
-<Typography variant="body1" gutterBottom>
-  The public key is derived from the secret key by applying a specific transformation. In the case of Dilithium, the public key is obtained by squaring each coefficient of the secret key and taking the result modulo a large prime number (8380417).
-</Typography>
-<Typography variant="body1" gutterBottom>
-  The key generation process also involves creating a matrix called the "SIS matrix," which is used in the signature generation and verification processes. The SIS matrix is a random matrix with coefficients drawn from a Gaussian distribution.
-</Typography>
-<Typography variant="body1" gutterBottom>
-  The security of the Dilithium algorithm relies on the hardness of two mathematical problems: the Module-LWE (Learning with Errors) problem and the SIS (Short Integer Solution) problem. These problems are believed to be difficult to solve, even for quantum computers, which provides the post-quantum security of Dilithium.
-</Typography>
-<Typography variant="h6" gutterBottom>Example</Typography>
-<Typography variant="body1" gutterBottom>
-  Let's go through an example of key generation:
-</Typography>
-<ol>
-  <li>
-    <Typography variant="body1">
-      Alice wants to generate a key pair for the Dilithium algorithm. She sets the parameters for the key generation process, such as the polynomial degree (n), the modulus (q), and the noise parameters (gamma1 and gamma2).
-    </Typography>
-  </li>
-  <li>
-    <Typography variant="body1">
-      Alice samples a random polynomial with coefficients drawn from a Gaussian distribution centered around zero and scaled by gamma1. This polynomial becomes her secret key. For example, her secret key might be [1, -2, 3, -4, 5, -6, 7, -8].
-    </Typography>
-  </li>
-  <li>
-    <Typography variant="body1">
-      Alice derives her public key by squaring each coefficient of the secret key and taking the result modulo q (8380417). For example, if her secret key is [1, -2, 3, -4, 5, -6, 7, -8], her public key might be [1, 4, 9, 16, 25, 36, 49, 64].
-    </Typography>
-  </li>
-  <li>
-    <Typography variant="body1">
-      Alice also generates the SIS matrix by sampling random polynomials with coefficients drawn from a Gaussian distribution centered around zero and scaled by gamma2.
-    </Typography>
-  </li>
-  <li>
-    <Typography variant="body1">
-      Alice now has a secret key, a public key, and an SIS matrix, which she can use for signing and verifying messages using the Dilithium algorithm.
-    </Typography>
-  </li>
-</ol>
-      <div className="controls">
-        {/* Interactive sliders or input fields with explanations */}
-        <label>Polynomial Degree (n): <input type="number" value={n} onChange={e => setN(parseInt(e.target.value, 10))} /></label>
-        <label>Modulus (q): <input type="number" value={q} onChange={e => setQ(parseInt(e.target.value, 10))} /></label>
-        <label>Error Range (eta): <input type="number" value={eta} onChange={e => setEta(parseInt(e.target.value, 10))} /></label>
-        <label>Dimension (k): <input type="number" value={k} onChange={e => setK(parseInt(e.target.value, 10))} /></label>
-        <label>Noise Parameter (gamma1): <input type="number" value={gamma1} onChange={e => setGamma1(parseFloat(e.target.value))} /></label>
-        <label>Noise Parameter (gamma2): <input type="number" value={gamma2} onChange={e => setGamma2(parseFloat(e.target.value))} /></label>
-      </div>
-      <animated.div style={secretKeyProps}>
-        <PolynomialDisplay 
-          vector={secretKey} 
-          title="Secret Key (s)" 
-          explanation="Secret keys are sampled from a discrete Gaussian distribution centered around zero with a standard deviation defined by the gamma parameter. This process ensures the hardness of the Dilithium scheme by embedding high entropy into the key structure."
-        />
-      </animated.div>
-      <animated.div style={publicKeyProps}>
-        <PolynomialDisplay 
-          vector={publicKey} 
-          title="Public Key (t)"
-          explanation="Public keys follow the same sampling process but are used in the verification phase of the cryptographic protocol, ensuring that they are compatible with the corresponding secret keys while remaining computationally infeasible to invert."
-        />
-      </animated.div>
-      <animated.div style={sisMatrixProps}>
-        <MatrixDisplay 
-          matrix={sisMatrix} 
-          title="SIS Matrix (A)"
-          explanation="The SIS matrix is integral to setting up the lattice basis for the SIS problem, where the challenge lies in finding a short vector that is orthogonal to all rows of the matrix under modulo q arithmetic."
-        />
-      </animated.div>
+    <StyledContainer>
+      <StyledTitle>Dilithium Key Generation Simulation</StyledTitle>
+      <p>
+The key generation process utilizes the principles of lattice-based cryptography, specifically leveraging polynomial sampling for creating secure and robust keys. </p>
+      <ol>
+        <li>
+          <Typography variant="body1">
+            Alice wants to generate a key pair for the Dilithium algorithm. She sets the parameters for the key generation process, such as the polynomial degree (n), the modulus (q), and the noise parameters (gamma1 and gamma2).
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body1">
+            Alice samples a random polynomial with coefficients drawn from a Uniform distribution centered around zero and scaled by gamma1. This polynomial becomes her secret key. For example, her secret key might be [1, -2, 3, -4, 5, -6, 7, -8].
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body1">
+            Alice derives her public key by squaring each coefficient of the secret key and taking the result modulo q (8380417). For example, if her secret key is [1, -2, 3, -4, 5, -6, 7, -8], her public key might be [1, 4, 9, 16, 25, 36, 49, 64].
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body1">
+            Alice also generates the SIS matrix by sampling random polynomials with coefficients drawn from a Uniform distribution centered around zero and scaled by gamma2.
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body1">
+            Alice now has a secret key, a public key, and an SIS matrix, which she can use for signing and verifying messages using the Dilithium algorithm.
+          </Typography>
+        </li>
+      </ol>
+
+      <StyledControls>
+<TextField label="Polynomial Degree (n)" type="number" value={n} onChange={e => setN(parseInt(e.target.value, 10))} />
+<TextField label="Modulus (q)" type="number" value={q} onChange={e => setQ(parseInt(e.target.value, 10))} />
+<TextField label="Noise for Secret Key (eta)" type="number" value={eta} onChange={e => setEta(parseInt(e.target.value, 10))} />
+<TextField label="Dimension of SIS Matrix (k)" type="number" value={k} onChange={e => setK(parseInt(e.target.value, 10))} />
+<TextField label="Noise Parameter 1 (gamma1)" type="number" value={gamma1} onChange={e => setGamma1(parseFloat(e.target.value))} />
+<TextField label="Noise Parameter 2 (gamma2)" type="number" value={gamma2} onChange={e => setGamma2(parseFloat(e.target.value))} />
+</StyledControls>
+
+<animated.div style={secretKeyProps}>
+    <PolynomialDisplay
+      vector={secretKey}
+      title="Secret Key (s)"
+      explanation="Secret keys are sampled from a uniform distribution. Each coefficient is drawn independently, ensuring a high entropy which is crucial for security.These polynomials represent short lattice vectors within the cryptographic scheme, providing the foundational private component that must remain confidential."
+    />
+  </animated.div>
+
+  <animated.div style={publicKeyProps}>
+    <PolynomialDisplay
+      vector={publicKey}
+      title="Public Key (t)"
+      explanation="The public key is derived by squaring each coefficient of the secret key and reducing modulo q. This process effectively converts the secret key’s polynomial into another form (the public key polynomial) that retains a mathematical linkage to the secret key but does not expose the original coefficients or their structure."
+    />
+  </animated.div>
+
+  <animated.div style={sisMatrixProps}>
+    <MatrixDisplay
+      matrix={sisMatrix}
+      title="SIS Matrix (A)"
+      explanation="The SIS matrix is a key component in the Dilithium scheme. It is used in the signing algorithm to ensure that the signatures are secure and verifiable."
+    />
+  </animated.div>
+
       <div className="explanation">
         <p>
-          <strong>Module-LWE and SIS in Dilithium:</strong> These foundational cryptographic challenges utilize the algebraic structure of polynomials and matrices to create computationally hard problems. The security of the Dilithium scheme hinges on the complexity of solving these problems under quantum computational assumptions.
+        <strong>Infeasibility of Deriving Secret Key:</strong> The transformation from the secret key to the public key involves one-way mathematical functions that are easy to compute forwards but exceedingly difficult to reverse. This means that even if an attacker has access to the public key, they cannot feasibly derive the corresponding secret key without solving complex lattice problems, thus ensuring the security of encrypted communications.
+        </p>
+        <p>
+        <strong>Integration into Lattice Structure:</strong> Polynomials in this context can be thought of as vectors in a multidimensional lattice. The operations performed on these polynomials (such as addition, multiplication, and modular reduction) correspond to lattice operations, which underpin the security of the system.
         </p>
       </div>
-    </div>
+      <h3><a href="/dilithiumsigning">Next</a></h3>
+    </StyledContainer>
   );
 };
 

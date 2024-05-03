@@ -1,5 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react';
 import anime from 'animejs/lib/anime.es.js';
+import { TextField, Button, Card, CardContent, Typography, Box, Container } from '@mui/material';
+import { styled } from '@mui/system';
+
+// Custom styled components
+const PageContainer = styled(Container)({
+    padding: '20px',
+    fontFamily: 'Arial, sans-serif'
+});
+
+const StyledCard = styled(Card)({
+    margin: '20px 0',
+    padding: '15px'
+});
+
+const FlexRow = styled(Box)({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '20px'
+});
+
+const FlexColumn = styled(Box)({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '20px'
+});
+
+const ColorBox = styled(Box)({
+    width: '50px',
+    height: '50px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    borderRadius: '4px'
+});
 
 const VIBGYOR_COLORS = [
     '9400D3', // Violet
@@ -275,73 +313,6 @@ const _256bitSecurity = () => {
         </div>
     );
 };
-
-// const SecurityVisualization = () => {
-//     const [blackDotCount, setBlackDotCount] = useState(1);
-//     const [redSquareCount, setRedSquareCount] = useState(0);
-//     const [blueCircleCount, setBlueCircleCount] = useState(0);
-//     const [yellowTriangleCount, setYellowTriangleCount] = useState(0);
-//     const [greenPentagonCount, setGreenPentagonCount] = useState(0);
-//     const [purpleHexagonCount, setPurpleHexagonCount] = useState(0);
-//     const [power, setPower] = useState(1);
-
-//     useEffect(() => {
-//         const timer = setTimeout(() => {
-//             if (blackDotCount < 16) {
-//                 setBlackDotCount(blackDotCount * 2);
-//             } else if (redSquareCount < 16) {
-//                 setRedSquareCount(redSquareCount * 2 + 1);
-//             } else if (blueCircleCount < 16) {
-//                 setBlueCircleCount(blueCircleCount * 2 + 1);
-//             } else if (yellowTriangleCount < 16) {
-//                 setYellowTriangleCount(yellowTriangleCount * 2 + 1);
-//             } else if (greenPentagonCount < 16) {
-//                 setGreenPentagonCount(greenPentagonCount * 2 + 1);
-//             } else {
-//                 setPurpleHexagonCount(purpleHexagonCount * 2 + 1);
-//             }
-//             setPower(power + 1);
-//         }, 1000);
-
-//         return () => clearTimeout(timer);
-//     }, [blackDotCount, redSquareCount, blueCircleCount, yellowTriangleCount, greenPentagonCount, purpleHexagonCount, power]);
-
-//     return (
-//         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-//             <div style={{ width: '500px', height: '500px', backgroundColor: '#eee', position: 'relative' }}>
-//                 {Array.from({ length: blackDotCount }).map((_, idx) => (
-//                     <div key={`dot-${idx}`} style={{ position: 'absolute', top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, width: '2px', height: '2px', backgroundColor: 'black' }} />
-//                 ))}
-//                 {Array.from({ length: redSquareCount }).map((_, idx) => (
-//                     <div key={`square-${idx}`} style={{ position: 'absolute', top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, width: '10px', height: '10px', backgroundColor: 'red' }} />
-//                 ))}
-//                 {Array.from({ length: blueCircleCount }).map((_, idx) => (
-//                     <div key={`circle-${idx}`} style={{ position: 'absolute', top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, width: '20px', height: '20px', backgroundColor: 'blue', borderRadius: '50%' }} />
-//                 ))}
-//                 {Array.from({ length: yellowTriangleCount }).map((_, idx) => (
-//                     <div key={`triangle-${idx}`} style={{ position: 'absolute', top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, width: '0', height: '0', borderLeft: '15px solid transparent', borderRight: '15px solid transparent', borderBottom: '25px solid yellow' }} />
-//                 ))}
-//                 {Array.from({ length: greenPentagonCount }).map((_, idx) => (
-//                     <div key={`pentagon-${idx}`} style={{ position: 'absolute', top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, width: '30px', height: '30px', backgroundColor: 'green', clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)' }} />
-//                 ))}
-//                 {Array.from({ length: purpleHexagonCount }).map((_, idx) => (
-//                     <div key={`hexagon-${idx}`} style={{ position: 'absolute', top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, width: '40px', height: '40px', backgroundColor: 'purple', clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
-//                 ))}
-//             </div>
-//             <p>2^{power}</p>
-//             <div>
-//                 <span style={{ margin: '5px' }}><span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'black' }}></span> = 1</span>
-//                 <span style={{ margin: '5px' }}><span style={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: 'red' }}></span> = 16 dots</span>
-//                 <span style={{ margin: '5px' }}><span style={{ display: 'inline-block', width: '20px', height: '20px', backgroundColor: 'blue', borderRadius: '50%' }}></span> = 16 squares</span>
-//                 <span style={{ margin: '5px' }}><span style={{ display: 'inline-block', width: '0', height: '0', borderLeft: '15px solid transparent', borderRight: '15px solid transparent', borderBottom: '25px solid yellow' }}></span> = 16 circles</span>
-//                 <span style={{ margin: '5px' }}><span style={{ display: 'inline-block', width: '30px', height: '30px', backgroundColor: 'green', clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)' }}></span> = 16 triangles</span>
-//                 <span style={{ margin: '5px' }}><span style={{ display: 'inline-block', width: '40px', height: '40px', backgroundColor: 'purple', clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}></span> = 16 pentagons</span>
-//             </div>
-//         </div>
-//     );
-// };
-
-
 
 const Hash = () => {
     const [targetColor, setTargetColor] = useState(getRandomRGB);

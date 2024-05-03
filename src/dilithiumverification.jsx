@@ -1,97 +1,109 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Paper, Grid, Card, CardContent } from '@mui/material';
+import { TextField, Typography, Button, Card, CardContent } from '@mui/material';
+import styled from 'styled-components';
+import sha256 from 'crypto-js/sha256';
+import { shake256 } from 'js-sha3';
 
-/**
- * A mock function to decompress a public key. In real scenarios, this would involve complex algorithms.
- */
-const decompressPublicKey = (compressedKey) => {
-    // Decompressing could theoretically expand the key to its original size.
-    return compressedKey.map(k => k * 2); // Dummy transformation for demonstration.
-};
+const StyledContainer = styled.div`
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+`;
 
-/**
- * Simulates the verification of a signature using a message and a public key.
- */
-const verifySignature = (message, signature, publicKey) => {
-    // Simplified verification: checks if the signature matches the expected value computed from the message and public key.
-    const messageHash = hashFunction(message, 8380417);
-    const expectedSignature = publicKey.map((k, i) => (k + messageHash) % 8380417);
+const StyledControls = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+`;
 
-    return signature.every((sig, index) => sig === expectedSignature[index]);
-};
-const hashFunction = (input, modulus) => {
-    return input.split('').reduce((acc, char) => (acc + char.charCodeAt(0)) % modulus, 0);
-};
+const InfoDisplay = ({ title, data, children }) => (
+  <Card variant="outlined" style={{ margin: '20px 0' }}>
+    <CardContent>
+      <Typography color="textSecondary" gutterBottom>
+        {title}
+      </Typography>
+      {data && <Typography variant="body2">{data}</Typography>}
+      {children}
+    </CardContent>
+  </Card>
+);
 
-/**
- * Displays information and results with animations and explanations.
- */
-const InfoDisplay = ({ title, children }) => {
-    return (
-        <Card variant="outlined" style={{ margin: '20px 0' }}>
-            <CardContent>
-                <Typography variant="h6">{title}</Typography>
-                {children}
-            </CardContent>
-        </Card>
-    );
-};
-
-/**
- * Component to simulate the verification process of the Crystals-Dilithium algorithm.
- */
 const DilithiumVerification = () => {
-    const [message, setMessage] = useState('');
-    const [compressedPublicKey, setCompressedPublicKey] = useState([5, 7, 11]); // Dummy compressed public key
-    const [signature, setSignature] = useState([23, 29, 31]); // Dummy signature
-    const [publicKey, setPublicKey] = useState([]);
-    const [verificationResult, setVerificationResult] = useState(null);
-    const [messageHash, setMessageHash] = useState(null);
+  const [message, setMessage] = useState('');
+  const [digest, setDigest] = useState('');
+  const [signature, setSignature] = useState([]);
+  const [isValidSignature, setIsValidSignature] = useState(false);
+  const [publicKey, setPublicKey] = useState([]);
 
-    const handleVerify = () => {
-        const decompressedKey = decompressPublicKey(compressedPublicKey);
-        setPublicKey(decompressedKey);
-        const hash = hashFunction(message, 8380417);
-        setMessageHash(hash);
-        const result = verifySignature(message, signature, decompressedKey);
-        setVerificationResult(result);
-    };
+  const generatePublicKey = () => {
+    const secretKey = Array.from({ length: 256 }, () => Math.floor(Math.random() * 8380417));
+    const publicKey = secretKey.map(k => (k * k) % 8380417);
+    setPublicKey(publicKey);
+    return secretKey;
+  };
 
-    return (
-        <Grid container spacing={2} padding={2}>
-            <Grid item xs={12}>
-                <TextField
-                    label="Enter Message"
-                    variant="outlined"
-                    fullWidth
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                />
-                <Button variant="contained" color="primary" onClick={handleVerify} style={{ marginTop: '20px' }}>
-                    Verify Signature
-                </Button>
-            </Grid>
-            <Grid item xs={12}>
-                {publicKey.length > 0 && (
-                    <InfoDisplay title="Decompressed Public Key">
-                        <Typography>The public key was decompressed for verification:</Typography>
-                        <Paper style={{ padding: '10px', marginTop: '10px' }}>
-                            {publicKey.map((k, i) => (
-                                <Typography key={i} style={{ display: 'inline-block', marginRight: '10px' }}>{k}</Typography>
-                            ))}
-                        </Paper>
-                    </InfoDisplay>
-                )}
-                {verificationResult !== null && (
-                    <InfoDisplay title="Verification Result">
-                        <Typography variant="body1">
-                            {verificationResult ? 'The signature is valid.' : 'The signature is invalid.'}
-                        </Typography>
-                    </InfoDisplay>
-                )}
-            </Grid>
-        </Grid>
-    );
+  const handleSignMessage = () => {
+    const secretKey = generatePublicKey();
+    const messageDigest = sha256(message).toString();
+    setDigest(messageDigest);
+
+    const signature = secretKey.map(sk => (sk + parseInt(messageDigest.substring(0, 8), 16)) % 8380417);
+    setSignature(signature);
+
+    verifySignature(secretKey, signature, messageDigest);
+  };
+
+  const verifySignature = (secretKey, signature, digest) => {
+    const expectedSignature = secretKey.map(sk => (sk + parseInt(digest.substring(0, 8), 16)) % 8380417);
+    const isValid = expectedSignature.every((s, index) => s === signature[index]);
+    setIsValidSignature(isValid);
+  };
+
+  return (
+    <StyledContainer>
+      <Typography variant="h4" gutterBottom>Dilithium Signing and Verification Process</Typography>
+      <Typography variant="body1" style={{ marginBottom: '20px' }}>
+        The Dilithium cryptographic algorithm uses lattice-based problems, specifically designed to be secure against quantum computing threats. The security of the algorithm relies on the difficulty of finding short vectors in high-dimensional lattices, which is computationally hard.
+      </Typography>
+      <StyledControls>
+        <TextField
+          label="Enter Message"
+          fullWidth
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+        />
+        <Button variant="contained" color="primary" onClick={handleSignMessage}>
+          Sign and Verify Message
+        </Button>
+      </StyledControls>
+
+      <InfoDisplay title="Message Digest (SHA-256)" data={digest}>
+        <Typography variant="body2">
+          SHA-256 is utilized to create a fixed-size digest of the message. This process reduces the data complexity and ensures that the integrity of the data can be securely signed.
+        </Typography>
+      </InfoDisplay>
+      <InfoDisplay title="Public Key" data={publicKey.join(', ')}>
+        <Typography variant="body2">
+          Each element of the public key is generated by squaring elements of the secret key and taking the result modulo a large prime number, q. This quadratic residue problem underpins the security of public key schemes in lattice-based cryptography.
+        </Typography>
+      </InfoDisplay>
+      <InfoDisplay title="Signature" data={signature.join(', ')}>
+        <Typography variant="body2">
+          The signature is created by adding a value derived from the message digest to the secret key modulo q. This ensures that the signature is tied cryptographically to both the message and the secret key.
+        </Typography>
+      </InfoDisplay>
+      <InfoDisplay title="Verification Result" data={isValidSignature ? "Valid" : "Invalid"}>
+        <Typography variant="body2">
+          During verification, the signature is recalculated using the stored public key and compared to the original signature. A match confirms the message's authenticity and the signer's identity.
+        </Typography>
+      </InfoDisplay>
+    </StyledContainer>
+  );
 };
 
 export default DilithiumVerification;

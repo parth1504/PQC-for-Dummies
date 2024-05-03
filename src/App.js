@@ -15,7 +15,6 @@ import TreeOfTrees from "./TreeOfTrees";
 import CryptoComparison from "./CryptoComparison";
 import LatticeCryptography from "./latticecryptography";
 import SVPCVP from "./svpcvp";
-import SVPCVPTWO from "./svpcvptwo";
 import AverageVsWorstCase from "./averagevsworstcase";
 import SIS from "./sis";
 import LearningWithErrors from "./learningwitherrors";
@@ -44,7 +43,6 @@ function App() {
         <Route path="/treeoftrees" element={<TreeOfTrees/>} />
         <Route path="/latticecryptography" element={<LatticeCryptography/>} />
         <Route path="/svpcvp" element={<SVPCVP/>} />
-        <Route path="/svpcvptwo" element={<SVPCVPTWO/>} />
         <Route path="/cryptocomparison" element={<CryptoComparison/>} />
         <Route path="/averagevsworstcase" element={<AverageVsWorstCase/>} />
         <Route path="/sis" element={<SIS/>} />

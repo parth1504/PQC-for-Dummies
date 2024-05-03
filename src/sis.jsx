@@ -58,6 +58,7 @@ function SIS() {
                     Potential Solutions to Check: {potentialSolutions.toLocaleString()}
                 </Typography>
             </div>
+            <h3><a href="/dilithiumkeygen">Next</a></h3>
         </Container>
     );
 }
